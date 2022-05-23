@@ -1,0 +1,23 @@
+---
+- set_fact:
+    name: "{{ ansible_network_os }}_{{ (item.path | basename).split('.') | first  }}"
+    resource: "{{ (item.path | basename).split('.') | first  }}"
+    lst: "{{ (item.path | basename).split('.') | first  }}"
+
+- name: Grab the resource facts
+  include_vars:
+    file: "{{ item.path }}"
+    name: module_vars
+
+- include_tasks: includes/edit_resource.yaml
+  when:
+    - resources is defined
+
+- name: Apply configuration
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+    name: "junos_{{ name }}"
+    config: "{{ module_vars[resource] }}"
+    state: "{{ state }}"
+  when:
+    - resources is not defined

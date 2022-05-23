@@ -1,0 +1,12 @@
+---
+- name: Run the platform specific list task tests
+  include_tasks: "../tests/list/list.yaml"
+
+- name: Run the platform specific gather task tests
+  include_tasks: "../tests/gather/gather.yaml"
+
+- name: Run the platform specific deploy task tests
+  include_tasks: "../tests/deploy/deploy.yaml"
+
+- name: Run the platform specific persist task tests
+  include_tasks: "../tests/persist/persist.yaml"

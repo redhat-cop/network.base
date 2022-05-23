@@ -1,0 +1,13 @@
+---
+- name: Get list of files
+  find:
+    paths: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}"
+    recurse: false
+    patterns: "*.yaml"
+    file_type: file
+  register: found_directories
+
+- include_tasks: includes/configure.yaml
+  loop: "{{ found_directories.files }}"
+  loop_control:
+    label: "{{ item.path | basename }}"

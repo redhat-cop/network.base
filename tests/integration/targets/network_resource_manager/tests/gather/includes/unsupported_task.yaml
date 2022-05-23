@@ -1,0 +1,3 @@
+---
+- fail:
+    msg: "{{ perform_task }} is not yet supported"

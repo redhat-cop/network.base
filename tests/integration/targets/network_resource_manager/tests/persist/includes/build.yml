@@ -1,0 +1,13 @@
+---
+- name: Run the platform facts module
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+    name: "{{ item }}"
+    state: gathered
+  register: result
+
+- include_tasks: "./write_to_file.yaml"
+  when:
+    - inventory_directory is defined
+    - result["gathered"] != {}
+    - result["gathered"] != []

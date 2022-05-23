@@ -1,0 +1,6 @@
+- set_fact:
+    final_params: "{{ 'bgp' |ansible.utils.health_check(result['stdout'], ansible_network_os)}}"
+
+- name: BGP Summary {{ ansible_network_os }}
+  debug:
+    msg: "{{ final_params }}"

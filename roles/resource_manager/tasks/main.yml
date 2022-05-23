@@ -1,0 +1,6 @@
+---
+- name: Run the platform specific tasks
+  include_tasks: "./{{ perform_task }}.yaml"
+  with_first_found:
+  - "{{ perform_task }}.yaml"
+  - "includes/unsupported_task.yaml"

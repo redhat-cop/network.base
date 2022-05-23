@@ -1,0 +1,7 @@
+---
+- name: Apply provided configuration
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+    name: "lldp_global"
+    config: "{{ module_vars }}"
+    state: 'merged'
