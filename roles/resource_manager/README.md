@@ -4,7 +4,7 @@
 
 This role provides a single platform-agnostics entry point to manage all the resources supported for a given network OS..
 
-## Using the platform-agnostic role ansible.network.resource_manager as part of ansible.network collection.
+## Using the platform-agnostic role network.base.resource_manager as part of network.base collection.
 
 **Capabilities**
 ```
