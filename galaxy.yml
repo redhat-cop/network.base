@@ -2,16 +2,17 @@
 authors:
   - Ansible Network Community (ansible-network)
 dependencies:
-  "ansible.netcommon": ">=2.5.1"
-  "ansible.utils": '>=2.5.0'
+  "ansible.netcommon": "*"
+  "ansible.utils": '*'
 
 license_file: LICENSE
 name: base
 description: Ansible Network meta Collection to install all network supported content.
 namespace: network
 readme: README.md
-repository: https://github.com/ansible-network/network.base
-tags: [networking, security, cloud, network_cli, netconf, httpapi, grpc]
+repository: https://github.com/ansible-collections/network.base
+issues: https://github.com/ansible-collections/network.base/issue
+
 # NOTE(pabelanger): We create an empty version key to keep ansible-galaxy
 # happy. We dynamically inject version info based on git information.
 version: null
