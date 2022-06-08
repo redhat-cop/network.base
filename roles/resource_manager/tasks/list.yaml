@@ -1,0 +1,8 @@
+---
+- name: Run the network resource plugin
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+  register: available_network_resources
+
+- debug:
+    msg: "{{ available_network_resources }}"

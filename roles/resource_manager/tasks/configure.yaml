@@ -1,0 +1,7 @@
+---
+- name: Invoke the resource module operation
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+    name: "{{ resource }}"
+    config: "{{ config }}"
+    state: "{{ state }}"
