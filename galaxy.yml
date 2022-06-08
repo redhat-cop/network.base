@@ -2,20 +2,13 @@
 authors:
   - Ansible Network Community (ansible-network)
 dependencies:
-  "ansible.netcommon": '*'
-  "ansible.utils": '*'
-  "arista.eos": '*'
-  "cisco.ios": '*'
-  "cisco.iosxr": '*'
-  "cisco.nxos": '*'
-  "junipernetworks.junos": '*'
-  "openvswitch.openvswitch": '*'
-  "vyos.vyos": '*'
-  "frr.frr": '*'
+  "ansible.netcommon": ">=2.5.1"
+  "ansible.utils": '>=2.5.0'
+
 license_file: LICENSE
-name: network
+name: base
 description: Ansible Network meta Collection to install all network supported content.
-namespace: ansible
+namespace: network
 readme: README.md
 repository: https://github.com/ansible-network/network.base
 tags: [networking, security, cloud, network_cli, netconf, httpapi, grpc]
