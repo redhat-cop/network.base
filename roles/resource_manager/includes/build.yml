@@ -11,6 +11,6 @@
 
 - include: includes/write_to_file.yaml
   when:
-    - inventory_directory is defined
+    - perform_task == 'persist'
     - result["gathered"] != {}
     - result["gathered"] != []
