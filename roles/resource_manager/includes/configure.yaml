@@ -9,6 +9,11 @@
     file: "{{ item.path }}"
     name: module_vars
 
+- name: Set default state
+  set_fact:
+    state: 'merged'
+  when: state is not defined
+
 - include_tasks: includes/edit_resource.yaml
   when:
     - resources is defined
