@@ -11,7 +11,7 @@
 
 - name: Check that the inventory exists
   stat:
-    path: "./{{ inventory_directory }}/inventory.yaml"
+    path: "{{ inventory_directory }}/inventory.yaml"
   register: stat_result
 
 - name: Create the file, if it doesnt exist already
