@@ -1,8 +1,22 @@
 ---
+- name: Set default path
+  set_fact:
+    inventory_directory: ./inventory
+  when: inventory_directory is not defined
+
 - name: Create inventory directory
   file:
     path: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}"
     state: directory
+
+- name: Check that the inventory exists
+  stat:
+    path: "{{ inventory_directory }}/inventory.yaml"
+  register: stat_result
+
+- name: Create the file, if it doesnt exist already
+  command: cp -r ./inventory.yaml {{ inventory_directory }}/
+  when: not stat_result.stat.exists
 
 - name: Write each resource to a file
   copy:
