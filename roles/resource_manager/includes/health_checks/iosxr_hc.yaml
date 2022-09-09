@@ -4,4 +4,3 @@
   register: result
 
 - include_tasks: includes/health_checks/perform.yaml
-
