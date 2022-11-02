@@ -1,0 +1,11 @@
+ancestor: null
+releases:
+  1.0.0:
+    changes:
+      release_summary: Releasing v1.0.0 of the Ansible network.base collection that
+        enables ansible network validated content to gather, persist, deploy facts.
+    fragments:
+    - release_1.0.0.yaml
+    - add_resource_manager_role.yaml
+    - update_sanity_jobs.yaml
+    release_date: '2022-11-02'
