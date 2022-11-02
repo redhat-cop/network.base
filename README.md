@@ -1,7 +1,8 @@
 ## Network Base Validated Content
 
-### Overview
+This repository contains the `network.base` Ansible Collection.
 
+## Description
 The `network.base` application acts as core for other validated content, as it provides the platform agnostic role called Resource Manager.
 This validated content provides a single platform-agnostics entry point to manage all the resources supported for a given network OS.
 
@@ -33,7 +34,7 @@ These host vars are ansible facts which have been gathered through the network r
 
 
 #### Building Brownfield Inventory
-```
+```yaml
 
 ---
 - hosts: ios
@@ -52,7 +53,7 @@ These host vars are ansible facts which have been gathered through the network r
 ```
 
 #### Gather BGP Facts
-```
+```yaml
 
 ---
 - hosts: ios
@@ -71,7 +72,7 @@ These host vars are ansible facts which have been gathered through the network r
 ```
 
 #### Deploy BGP Configuration
-```
+```yaml
 
 - hosts: ios
   gather_facts: false
@@ -87,3 +88,19 @@ These host vars are ansible facts which have been gathered through the network r
         - 'l2_interfaces'
         - 'l3_interfaces'
 ```
+
+### Code of Conduct
+This collection follows the Ansible project's
+[Code of Conduct](https://docs.ansible.com/ansible/devel/community/code_of_conduct.html).
+Please read and familiarize yourself with this document.
+
+
+## Release notes
+
+Release notes are available [here](https://github.com/redhat-cop/network.base/blob/main/CHANGELOG.rst).
+
+## Licensing
+
+GNU General Public License v3.0 or later.
+
+See [COPYING](https://www.gnu.org/licenses/gpl-3.0.txt) to see the full text.
