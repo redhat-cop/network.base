@@ -5,5 +5,5 @@
   register: available_network_resources
 
 - name: Available Network resources
-  debug:
+  ansible.builtin.debug:
     msg: "{{ available_network_resources }}"
