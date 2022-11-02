@@ -1,2 +1,0 @@
----
-- include_tasks: includes/health_checks/{{ ansible_network_os.split('.')[2] }}_hc.yaml

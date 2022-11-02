@@ -1,6 +1,6 @@
 ---
 - name: Set default path
-  set_fact:
+  ansible.builtin.set_fact:
     inventory_directory: ./inventory
   when: inventory_directory is not defined
 
@@ -10,15 +10,15 @@
     state: directory
 
 - name: Check that the inventory exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ inventory_directory }}/inventory.yaml"
   register: stat_result
 
 - name: Create the file, if it doesnt exist already
-  command: cp -r ./inventory.yaml {{ inventory_directory }}/
+  ansible.builtin.command: cp -r ./inventory.yaml {{ inventory_directory }}/
   when: not stat_result.stat.exists
 
 - name: Write each resource to a file
-  copy:
+  ansible.builtin.copy:
     content: "{{ {item: result['gathered']} | to_nice_yaml }}"
     dest: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}/{{ item }}.yaml"

@@ -1,20 +1,20 @@
 ---
-- set_fact:
-    name: "{{ ansible_network_os }}_{{ (item.path | basename).split('.') | first  }}"
+- ansible.builtin.set_fact:
+    name: "{{ ansible_network_os }}_{{ (item.path | basename).split('.') | first }}"
     resource: "{{ (item.path | basename).split('.') | first  }}"
-    lst: "{{ (item.path | basename).split('.') | first  }}"
+    lst: "{{ (item.path | basename).split('.') | first }}"
 
 - name: Grab the resource facts
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ item.path }}"
     name: module_vars
 
 - name: Set default state
-  set_fact:
+  ansible.builtin.set_fact:
     state: 'merged'
   when: state is not defined
 
-- include_tasks: includes/edit_resource.yaml
+- ansible.builtin.include_tasks: includes/edit_resource.yaml
   when:
     - resources is defined
 

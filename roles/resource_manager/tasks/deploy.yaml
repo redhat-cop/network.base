@@ -1,2 +1,3 @@
 ---
-- include_tasks: includes/deploy.yaml
+- name: Include Deploy task
+  ansible.builtin.include_tasks: includes/deploy.yaml

@@ -1,6 +1,0 @@
-- cisco.iosxr.iosxr_command:
-    commands:
-      - show bgp summary
-  register: result
-
-- include_tasks: includes/health_checks/perform.yaml

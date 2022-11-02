@@ -6,12 +6,14 @@
     state: gathered
   register: result
 
-- debug:
+- name: Resource Facts
+  ansible.builtin.debug:
     msg: "{{ result }}"
   when:
     - action != 'persist'
 
-- include: includes/write_to_file.yaml
+- name: Include file write task
+  ansible.builtin.include: includes/write_to_file.yaml
   when:
     - action == 'persist'
     - result["gathered"] != {}
