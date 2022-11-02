@@ -1,8 +1,8 @@
-## Network BGP Validated Content
+## Network Base Validated Content
 
 ### Overview
 
-The `network.base` eapplication acts as core for other validated content, as it provides the platform agnostic role called Resource Manager.
+The `network.base` application acts as core for other validated content, as it provides the platform agnostic role called Resource Manager.
 This validated content provides a single platform-agnostics entry point to manage all the resources supported for a given network OS.
 
 **Capabilities**
