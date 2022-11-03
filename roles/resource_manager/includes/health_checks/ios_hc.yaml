@@ -1,6 +1,0 @@
-- cisco.ios.ios_command:
-    commands:
-      - show bgp summary
-  register: result
-
-- include_tasks: includes/health_checks/perform.yaml

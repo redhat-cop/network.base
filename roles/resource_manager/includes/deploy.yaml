@@ -1,18 +1,19 @@
 ---
 - name: Set default path
-  set_fact:
+  ansible.builtin.set_fact:
     inventory_directory: ./inventory
   when: inventory_directory is not defined
 
 - name: Get list of files
-  find:
+  ansible.builtin.find:
     paths: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}"
     recurse: false
     patterns: "*.yaml"
     file_type: file
   register: found_directories
 
-- include_tasks: includes/configure.yaml
+- name: Include configure task
+  ansible.builtin.include_tasks: includes/configure.yaml
   loop: "{{ found_directories.files }}"
   loop_control:
     label: "{{ item.path | basename }}"

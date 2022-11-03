@@ -4,5 +4,6 @@
     os_name: "{{ ansible_network_os }}"
   register: available_network_resources
 
-- debug:
+- name: Available Network resources
+  ansible.builtin.debug:
     msg: "{{ available_network_resources }}"
