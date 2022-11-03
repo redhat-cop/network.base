@@ -1,3 +1,0 @@
----
-- name: Include BGP Summary Task
-  ansible.builtin.include_tasks: includes/bgp_summary.yaml
