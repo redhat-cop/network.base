@@ -5,7 +5,14 @@ releases:
       release_summary: Releasing v1.0.0 of the Ansible network.base collection that
         enables ansible network validated content to gather, persist, deploy facts.
     fragments:
-    - release_1.0.0.yaml
     - add_resource_manager_role.yaml
+    - release_1.0.0.yaml
     - update_sanity_jobs.yaml
     release_date: '2022-11-02'
+  1.1.0:
+    changes:
+      minor_changes:
+      - fix linting issues and remove integrated health checks.
+    fragments:
+    - ansible_lint_run_fixes.yaml
+    release_date: '2022-11-03'
