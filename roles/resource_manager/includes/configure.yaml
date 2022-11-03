@@ -1,5 +1,6 @@
 ---
-- ansible.builtin.set_fact:
+- name: Set facts
+  ansible.builtin.set_fact:
     name: "{{ ansible_network_os }}_{{ (item.path | basename).split('.') | first }}"
     resource: "{{ (item.path | basename).split('.') | first }}"
     lst: "{{ (item.path | basename).split('.') | first }}"
@@ -14,7 +15,8 @@
     state: 'merged'
   when: state is not defined
 
-- ansible.builtin.include_tasks: includes/edit_resource.yaml
+- name: Include tasks
+  ansible.builtin.include_tasks: includes/edit_resource.yaml
   when:
     - resources is defined
 
