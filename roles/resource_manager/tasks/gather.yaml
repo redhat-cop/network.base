@@ -11,7 +11,7 @@
 
 - name: Set network resorces
   ansible.builtin.set_fact:
-    network_resources: "{{ network_resources_list['modules']|ansible.utils.param_list_compare(resources) }}"
+    network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
 
 - name: Include build tasks
   ansible.builtin.include_tasks: includes/build.yml

@@ -13,7 +13,7 @@
     - action != 'persist'
 
 - name: Include file write task
-  ansible.builtin.include: includes/write_to_file.yaml
+  ansible.builtin.include_tasks: includes/write_to_file.yaml
   when:
     - action == 'persist'
     - result["gathered"] != {}
