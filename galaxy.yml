@@ -1,18 +1,14 @@
 ---
 authors:
-  - Ansible Network Community (ansible-network)
+  - Rohit Thakur (@rohitthakur2590)
 dependencies:
   "ansible.netcommon": "*"
   "ansible.utils": '*'
-
 license_file: LICENSE
 name: base
-description: Ansible Network meta Collection to install all network supported content.
+description: Ansible Network Collection provides platform-agnostic resource management for given network OS.
 namespace: network
 readme: README.md
-repository: https://github.com/ansible-collections/network.base
-issues: https://github.com/ansible-collections/network.base/issue
-
-# NOTE(pabelanger): We create an empty version key to keep ansible-galaxy
-# happy. We dynamically inject version info based on git information.
-version: null
+repository: https://github.com/redhat-cop/network.base
+issues: https://github.com/redhat-cop/network.base/issues
+version: 1.2.0

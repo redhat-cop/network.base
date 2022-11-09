@@ -16,3 +16,10 @@ releases:
     fragments:
     - ansible_lint_run_fixes.yaml
     release_date: '2022-11-03'
+  1.2.0:
+    changes:
+      release_summary: Re-releasing v1.1.0 with updated version tag and fixed URLs
+        for issues and repository in galaxy.yml.
+    fragments:
+      - prep_1.2.0.yaml
+    release_date: '2022-11-09'
