@@ -21,5 +21,12 @@ releases:
       release_summary: Re-releasing v1.1.0 with updated version tag and fixed URLs
         for issues and repository in galaxy.yml.
     fragments:
-      - prep_1.2.0.yaml
+    - prep_1.2.0.yaml
     release_date: '2022-11-09'
+  1.2.1:
+    changes:
+      bugfixes:
+      - fix runtime dynamic network os resource module invokation.
+    fragments:
+    - fix_platform_dynamic_invoke.yaml
+    release_date: '2022-12-02'
