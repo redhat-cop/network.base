@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - "`deploy` - update hardcoded value of variable to network_os in edit_resource file."
