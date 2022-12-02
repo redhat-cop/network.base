@@ -1,0 +1,3 @@
+---
+bugfixes:
+  - fix runtime dynamic network os resource module invokation.

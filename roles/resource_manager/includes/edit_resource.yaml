@@ -2,7 +2,7 @@
 - name: Apply provided configuration
   ansible.netcommon.network_resource:
     os_name: "{{ ansible_network_os }}"
-    name: "junos_{{ lst }}"
+    name: "{{ ansible_network_os.split('.')[-1] }}_{{ lst }}"
     config: "{{ module_vars[resource] }}"
     state: "{{ state }}"
   when: lst  in resources
