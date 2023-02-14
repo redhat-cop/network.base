@@ -16,5 +16,12 @@
   ansible.builtin.include_tasks: includes/write_to_file.yaml
   when:
     - action == 'persist'
+    - ignore_empty is undefined
     - result["gathered"] != {}
     - result["gathered"] != []
+
+- name: Include file write task
+  ansible.builtin.include_tasks: includes/write_to_file.yaml
+  when:
+    - action == 'persist'
+    - ignore_empty is defined

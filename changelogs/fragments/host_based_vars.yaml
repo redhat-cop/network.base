@@ -1,0 +1,3 @@
+---
+major_changes:
+  - Create inventory based on hostname

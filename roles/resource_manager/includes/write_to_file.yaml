@@ -14,7 +14,7 @@
     path: "{{ inventory_directory }}/inventory.yaml"
   register: stat_result
 
-- name: Create the file, if it doesnt exist already
+- name: Create the file, if it doesn't exist already
   ansible.builtin.command: cp -r ./inventory.yaml {{ inventory_directory }}/
   when: not stat_result.stat.exists
 
@@ -22,3 +22,14 @@
   ansible.builtin.copy:
     content: "{{ {item: result['gathered']} | to_nice_yaml }}"
     dest: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}/{{ item }}.yaml"
+  when:
+    - result['gathered'] != {}
+    - result['gathered'] != []
+
+- name: Write each empty resource to a file
+  ansible.builtin.copy:
+    content: "{{ item }}:"
+    dest: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}/{{ item }}.yaml"
+  when:
+    - result['gathered'] == {} or result['gathered'] == []
+    - persist_empty is true
