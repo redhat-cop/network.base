@@ -111,7 +111,47 @@ run.yml
         - '!l3_interfaces'
         - '!all'
 ```
+## Using detect task
+Detect configuration drift for given network resources for given ansible_network_os. In this action 'overridden' state is used with 'check_mode=True'
+```yaml
+run.yml
+---
+- hosts: iosxr
+  gather_facts: no
+  tasks:
+  - name: invoke gather function
+    include_role:
+      name: resource_manager
+    vars:
+      perform_task: detect
+      inventory_directory: ./inventory
+      ansible_network_os: cisco.iosxr.iosxr
+      resources:
+        - 'interfaces'
+        - 'l2_interfaces'
+        - 'l3_interfaces'
+```
 
+## Using remediate task
+Remediate configuration drift for given network resources for given ansible_network_os. In this action 'overridden' state of given resource module is used'
+```yaml
+run.yml
+---
+- hosts: iosxr
+  gather_facts: no
+  tasks:
+  - name: invoke remediate function
+    include_role:
+      name: resource_manager
+    vars:
+      perform_task: remediate
+      inventory_directory: ./inventory
+      ansible_network_os: cisco.iosxr.iosxr
+      resources:
+        - 'interfaces'
+        - 'l2_interfaces'
+        - 'l3_interfaces'
+```
 ### See Also:
 
 * [Ansible Using roles](https://docs.ansible.com/ansible/2.9/user_guide/playbooks_reuse_roles.html) for more details.

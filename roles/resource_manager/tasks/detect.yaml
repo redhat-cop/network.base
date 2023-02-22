@@ -21,6 +21,3 @@
 
 - debug:
     msg: "There is no configuration drift found"
-
-
-
