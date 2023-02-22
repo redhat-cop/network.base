@@ -8,10 +8,10 @@
     file: "{{ rms.path }}"
     name: module_vars
 
-- name: check for config drift
+- name: Check for config drift
   ansible.netcommon.network_resource:
     os_name: "{{ ansible_network_os }}"
-    name: "{{resource}}"
+    name: "{{ resource }}"
     config: "{{ module_vars[resource] }}"
     state: overridden
   check_mode: true
@@ -21,9 +21,9 @@
   ansible.utils.fact_diff:
     before: "{{ result.before }}"
     after: "{{ module_vars[resource] }}"
-  when: result.changed == true
+  when: result.commands is defined
 
 - name: Detect if there is config drift.
   ansible.builtin.fail:
-    msg: "configuration drift is found in {{result.resource_module_name}} Resource"
-  when: result.changed == true
+    msg: "configuration drift is found in {{ result.resource_module_name }} Resource"
+  when: result.commands is defined

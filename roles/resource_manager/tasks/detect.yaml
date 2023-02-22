@@ -19,5 +19,6 @@
   loop_control:
     loop_var: rms
 
-- debug:
+- name: Detect drift
+  ansible.builtin.debug:
     msg: "There is no configuration drift found"
