@@ -1,0 +1,24 @@
+---
+- name: Set default path
+  ansible.builtin.set_fact:
+    inventory_directory: ./inventory
+  when: inventory_directory is not defined
+
+- name: Get list of SOT files
+  ansible.builtin.find:
+    paths: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}"
+    recurse: false
+    patterns: "*.yaml"
+    file_type: file
+  register: found_directories
+
+
+- name: Include check_drift task
+  ansible.builtin.include_tasks: includes/check_drift.yaml
+  loop: "{{ found_directories.files }}"
+  loop_control:
+    loop_var: rms
+
+- name: Detect drift
+  ansible.builtin.debug:
+    msg: "There is no configuration drift found"
