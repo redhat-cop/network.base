@@ -52,7 +52,7 @@ These host vars are ansible facts which have been gathered through the network r
         - 'l3_interfaces'
 ```
 
-#### Gather BGP Facts
+#### Gather INTERFACE Facts
 ```yaml
 
 ---
@@ -71,7 +71,7 @@ These host vars are ansible facts which have been gathered through the network r
         - 'l3_interfaces'
 ```
 
-#### Deploy BGP Configuration
+#### Deploy INTERFACE Configuration
 ```yaml
 
 - hosts: ios
@@ -81,7 +81,43 @@ These host vars are ansible facts which have been gathered through the network r
     include_role:
       name: resource_manager
     vars:
-      action: gather
+      action: deploy
+      ansible_network_os: cisco.ios.ios
+      resources:
+        - 'interfaces'
+        - 'l2_interfaces'
+        - 'l3_interfaces'
+```
+
+#### Detect config drift in INTERFACE Configuration
+```yaml
+
+- hosts: ios
+  gather_facts: false
+  tasks:
+  - name: invoke detect function
+    include_role:
+      name: resource_manager
+    vars:
+      action: detect
+      ansible_network_os: cisco.ios.ios
+      resources:
+        - 'interfaces'
+        - 'l2_interfaces'
+        - 'l3_interfaces'
+```
+
+#### Remediate config drift in INTERFACE Configuration
+```yaml
+
+- hosts: ios
+  gather_facts: false
+  tasks:
+  - name: invoke remediate function
+    include_role:
+      name: resource_manager
+    vars:
+      action: remediate
       ansible_network_os: cisco.ios.ios
       resources:
         - 'interfaces'
