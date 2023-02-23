@@ -12,12 +12,18 @@
     file_type: file
   register: found_directories
 
+- name: Set default state as 'overridden'
+  ansible.builtin.set_fact:
+    state: 'overridden'
+  when: state is not defined
 
 - name: Include check_drift task
   ansible.builtin.include_tasks: includes/check_drift.yaml
   loop: "{{ found_directories.files }}"
   loop_control:
     loop_var: rms
+  when:
+    - resources is defined
 
 - name: Detect drift
   ansible.builtin.debug:

@@ -15,6 +15,7 @@
 - name: Set state as overridden to restore config
   ansible.builtin.set_fact:
     state: overridden
+  when: state is not defined
 
 - name: Rectify drift
   ansible.builtin.include_tasks: includes/configure.yaml
