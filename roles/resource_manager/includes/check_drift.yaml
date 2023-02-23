@@ -21,9 +21,9 @@
   ansible.utils.fact_diff:
     before: "{{ result.before }}"
     after: "{{ module_vars[resource] }}"
-  when: result.commands is defined
+  when: result.commands|length != 0
 
 - name: Detect if there is config drift.
   ansible.builtin.fail:
     msg: "configuration drift is found in {{ result.resource_module_name }} Resource"
-  when: result.commands is defined
+  when: result.commands|length != 0
