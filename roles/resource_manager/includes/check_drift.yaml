@@ -3,7 +3,8 @@
   ansible.builtin.set_fact:
     resource: "{{ (rms.path | basename).split('.') | first }}"
 
-- block:
+- name: "Start detecting config drift"
+  block:
     - name: Grab the resource facts
       ansible.builtin.include_vars:
         file: "{{ rms.path }}"
@@ -14,7 +15,7 @@
         os_name: "{{ ansible_network_os }}"
         name: "{{ ansible_network_os.split('.')[-1] }}_{{ resource }}"
         config: "{{ module_vars[resource] }}"
-        state: "{{state}}"
+        state: "{{ state }}"
       check_mode: true
       register: result
 
