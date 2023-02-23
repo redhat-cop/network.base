@@ -30,3 +30,24 @@ releases:
     fragments:
     - fix_platform_dynamic_invoke.yaml
     release_date: '2022-12-02'
+  2.0.0:
+    changes:
+      bugfixes:
+      - Fix issue in Detect action.
+      - Fix state of detect and remediate operation when overridden is not supported
+        by any RMs.
+      doc_changes:
+      - Fix docs issues in README.
+      major_changes:
+      - Create inventory based on hostname
+      minor_changes:
+      - Add feature which support detect and remediate actions.
+      - provide collection prefix with resource name.
+    fragments:
+    - feature_detect_restore.yaml
+    - fix_detect.yaml
+    - fix_detect_state.yaml
+    - fix_detect_when_redirect.yaml
+    - fix_docs.yaml
+    - host_based_vars.yaml
+    release_date: '2023-02-23'
