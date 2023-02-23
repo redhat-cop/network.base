@@ -3,27 +3,30 @@
   ansible.builtin.set_fact:
     resource: "{{ (rms.path | basename).split('.') | first }}"
 
-- name: Grab the resource facts
-  ansible.builtin.include_vars:
-    file: "{{ rms.path }}"
-    name: module_vars
+- name: "Start detecting config drift"
+  block:
+    - name: Grab the resource facts
+      ansible.builtin.include_vars:
+        file: "{{ rms.path }}"
+        name: module_vars
 
-- name: Check for config drift
-  ansible.netcommon.network_resource:
-    os_name: "{{ ansible_network_os }}"
-    name: "{{ ansible_network_os.split('.')[-1] }}_{{ resource }}"
-    config: "{{ module_vars[resource] }}"
-    state: overridden
-  check_mode: true
-  register: result
+    - name: Check for config drift
+      ansible.netcommon.network_resource:
+        os_name: "{{ ansible_network_os }}"
+        name: "{{ ansible_network_os.split('.')[-1] }}_{{ resource }}"
+        config: "{{ module_vars[resource] }}"
+        state: "{{ state }}"
+      check_mode: true
+      register: result
 
-- name: Show the difference in configuration
-  ansible.utils.fact_diff:
-    before: "{{ result.before }}"
-    after: "{{ module_vars[resource] }}"
-  when: result.commands|length != 0
+    - name: Show the difference in configuration
+      ansible.utils.fact_diff:
+        before: "{{ result.before }}"
+        after: "{{ module_vars[resource] }}"
+      when: result.commands|length != 0
 
-- name: Detect if there is config drift.
-  ansible.builtin.fail:
-    msg: "configuration drift is found in {{ result.resource_module_name }} Resource"
-  when: result.commands|length != 0
+    - name: Detect if there is config drift.
+      ansible.builtin.fail:
+        msg: "configuration drift is found in {{ result.resource_module_name }} Resource"
+      when: result.commands|length != 0
+  when: resource in resources

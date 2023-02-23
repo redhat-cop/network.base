@@ -1,0 +1,3 @@
+---
+bugfixes:
+   - Fix state of detect and remediate operation when overridden is not supported by any RMs.
