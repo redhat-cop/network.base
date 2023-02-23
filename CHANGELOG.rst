@@ -5,6 +5,31 @@ Network Base Collection Release Notes
 .. contents:: Topics
 
 
+v2.0.0
+======
+
+Major Changes
+-------------
+
+- Create inventory based on hostname
+
+Minor Changes
+-------------
+
+- Add feature which support detect and remediate actions.
+- provide collection prefix with resource name.
+
+Bugfixes
+--------
+
+- Fix issue in Detect action.
+- Fix state of detect and remediate operation when overridden is not supported by any RMs.
+
+Documentation Changes
+---------------------
+
+- Fix docs issues in README.
+
 v1.2.1
 ======
 
