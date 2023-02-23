@@ -11,7 +11,7 @@
 - name: Check for config drift
   ansible.netcommon.network_resource:
     os_name: "{{ ansible_network_os }}"
-    name: "{{ resource }}"
+    name: "{{ ansible_network_os.split('.')[-1] }}_{{ resource }}"
     config: "{{ module_vars[resource] }}"
     state: overridden
   check_mode: true
