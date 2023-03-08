@@ -21,11 +21,13 @@ jobs:
     if: ${{ always() }}
     needs:
       - changelog
+      - ansible-lint
       - sanity
     runs-on: ubuntu-latest
     steps:
       - run: >-
           python -c "assert set([
+          '${{ needs.ansible-lint.result }}',
           '${{ needs.changelog.result }}',
           '${{ needs.sanity.result }}'
           ]) == {'success'}"
