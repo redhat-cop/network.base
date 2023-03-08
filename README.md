@@ -6,6 +6,25 @@ This repository contains the `network.base` Ansible Collection.
 The `network.base` application acts as core for other validated content, as it provides the platform agnostic role called Resource Manager.
 This validated content provides a single platform-agnostics entry point to manage all the resources supported for a given network OS.
 
+## Tested with Ansible
+
+Tested with ansible-core 2.13 releases.
+
+## Installation
+
+```
+ansible-galaxy collection install git+https://github.com/redhat-cop/network.base
+```
+
+You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml` using the format:
+
+```yaml
+collections:
+- name: https://github.com/redhat-cop/network.base.git
+  type: git
+  version: main
+```
+
 **Capabilities**
 - Build Brownfield Inventory: This helps user to be able to get the facts for a given resource and store it as host_vars thus enabling the capability to get facts for all the hosts within the inventory and store facts in a structured format which acts as SOT.
 - Supported Resource Query: This helps user to be able to get the list of resource modules supported for a given network os.
