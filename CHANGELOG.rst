@@ -29,6 +29,7 @@ Documentation Changes
 ---------------------
 
 - Fix docs issues in README.
+- Update collection installation section.
 - Update instllation dcumentations and workflow.
 
 v1.2.1
