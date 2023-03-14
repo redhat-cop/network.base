@@ -38,6 +38,7 @@ releases:
         by any RMs.
       doc_changes:
       - Fix docs issues in README.
+      - Update instllation dcumentations and workflow.
       major_changes:
       - Create inventory based on hostname
       minor_changes:
@@ -50,4 +51,5 @@ releases:
     - fix_detect_when_redirect.yaml
     - fix_docs.yaml
     - host_based_vars.yaml
+    - update_base_docs.yaml
     release_date: '2023-02-23'
