@@ -1,8 +1,25 @@
 ---
+- name: DNM PRINT-1
+  ansible.builtin.debug:
+    msg: "{{ ansible_network_os }}"
+
 - name: Gather the supported resource modules
   ansible.netcommon.network_resource:
     os_name: "{{ ansible_network_os }}"
   register: network_resources_list
+
+# - name: Set default path
+#   ansible.builtin.set_fact:
+#     ansible_resource_list: "{{ network_resources_list }}"
+#   when: ansible_resource_list is not defined
+
+- name: DNM PRINT-2
+  ansible.builtin.debug:
+    msg: "{{ network_resources_list }}"
+
+- name: DNM PRINT-3
+  ansible.builtin.debug:
+    msg: "{{ resources }}"
 
 - name: Set Resources
   ansible.builtin.set_fact:
@@ -12,6 +29,10 @@
 - name: Set network resorces
   ansible.builtin.set_fact:
     network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
+
+- name: DNM PRINT-4
+  ansible.builtin.set_fact:
+    msg: "{{ network_resources }}"
 
 - name: Include build tasks
   ansible.builtin.include_tasks: includes/build.yml

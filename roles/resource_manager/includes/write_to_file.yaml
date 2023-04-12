@@ -6,22 +6,22 @@
 
 - name: Create inventory directory
   ansible.builtin.file:
-    path: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}"
+    path: "host_vars/{{ inventory_hostname }}"
     state: directory
 
-- name: Check that the inventory exists
-  ansible.builtin.stat:
-    path: "{{ inventory_directory }}/inventory.yaml"
-  register: stat_result
+# - name: Check that the inventory exists
+#   ansible.builtin.stat:
+#     path: "{{ inventory_directory }}/inventory.yaml"
+#   register: stat_result
 
-- name: Create the file, if it doesn't exist already
-  ansible.builtin.command: cp -r ./inventory.yaml {{ inventory_directory }}/
-  when: not stat_result.stat.exists
+# - name: Create the file, if it doesn't exist already
+#   ansible.builtin.command: cp -r ./inventory.yaml {{ inventory_directory }}/
+#   when: not stat_result.stat.exists
 
 - name: Write each resource to a file
   ansible.builtin.copy:
     content: "{{ {item: result['gathered']} | to_nice_yaml }}"
-    dest: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}/{{ item }}.yaml"
+    dest: "host_vars/{{ inventory_hostname }}/{{ item }}.yaml"
   when:
     - result['gathered'] != {}
     - result['gathered'] != []
@@ -29,7 +29,7 @@
 - name: Write each empty resource to a file
   ansible.builtin.copy:
     content: "{{ item }}:"
-    dest: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}/{{ item }}.yaml"
+    dest: "host_vars/{{ inventory_hostname }}/{{ item }}.yaml"
   when:
     - result['gathered'] == {} or result['gathered'] == []
     - persist_empty is true
