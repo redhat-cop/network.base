@@ -1,12 +1,4 @@
 ---
-- name: DNM PRINT-5
-  ansible.builtin.debug:
-    msg: "{{ item }}"
-
-- name: DNM PRINT-6
-  ansible.builtin.debug:
-    msg: "{{ ansible_network_os }}" 
-
 - name: Run the platform facts module
   ansible.netcommon.network_resource:
     os_name: "{{ ansible_network_os }}"

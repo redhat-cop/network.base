@@ -11,4 +11,5 @@ namespace: network
 readme: README.md
 repository: https://github.com/redhat-cop/network.base
 issues: https://github.com/redhat-cop/network.base/issues
+tags: [networking]
 version: 2.0.0
