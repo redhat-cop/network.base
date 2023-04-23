@@ -1,12 +1,19 @@
 ---
-- name: Set default path
-  ansible.builtin.set_fact:
-    inventory_directory: ./inventory
-  when: inventory_directory is not defined
+- name: Retrieve a repository from a distant location and make it available locally
+  ansible.builtin.include_tasks: includes/retrieve.yaml
+  when: origin is defined 
+
+- name: Include file write task
+  ansible.builtin.include_tasks: includes/inventory.yaml
+
+# - name: Set default path
+#   ansible.builtin.set_fact:
+#     inventory_directory: ./inventory
+#   when: inventory_directory is not defined
 
 - name: Get list of files
   ansible.builtin.find:
-    paths: "host_vars/{{ inventory_hostname }}"
+    paths: "{{ inventory_path }}/host_vars/{{ inventory_hostname }}"
     recurse: false
     patterns: "*.yaml"
     file_type: file

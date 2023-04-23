@@ -1,0 +1,10 @@
+---
+- name: Set default path
+  ansible.builtin.set_fact:
+    inventory_path: "{{ repository['path'] }}"
+  when: origin is defined
+
+- name: Set default path
+  ansible.builtin.set_fact:
+    inventory_path: "{{ inventory_directory }}"
+  when: origin is not defined

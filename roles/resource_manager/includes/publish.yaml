@@ -1,0 +1,4 @@
+---
+- name: Publish the changes
+  ansible.scm.git_publish:
+    path: "{{ repository['path'] }}"
