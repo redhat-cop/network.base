@@ -1,8 +1,4 @@
 ---
-# - name: PRINT 
-#   ansible.builtin.debug:
-#     msg: "{{ repository['path']}}"
-
 # - name: Set default path
 #   ansible.builtin.set_fact:
 #     inventory_directory: "{{ repository['path'] }}"
