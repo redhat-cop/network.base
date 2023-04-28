@@ -3,5 +3,6 @@
   ansible.scm.git_retrieve:
     origin:
       url: "{{ origin }}"
+      token: "{{ token }}"
     parent_directory: "{{ inventory_directory }}"
   register: repository
