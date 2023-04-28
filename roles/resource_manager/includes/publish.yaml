@@ -3,3 +3,9 @@
   ansible.scm.git_publish:
     path: "{{ repository['path'] }}"
     token: "{{ token }}"
+  when: token is defined
+
+- name: Publish the changes
+  ansible.scm.git_publish:
+    path: "{{ repository['path'] }}"
+  when: token is not defined
