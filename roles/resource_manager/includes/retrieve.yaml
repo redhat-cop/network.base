@@ -5,4 +5,13 @@
       url: "{{ origin }}"
       token: "{{ token }}"
     parent_directory: "{{ inventory_directory }}"
+  when: token is defined
+  register: repository
+
+- name: Retrieve a repository from a distant location and make it available locally
+  ansible.scm.git_retrieve:
+    origin:
+      url: "{{ origin }}"
+    parent_directory: "{{ inventory_directory }}"
+  when: token is not defined
   register: repository
