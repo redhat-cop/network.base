@@ -8,4 +8,4 @@
 - name: Publish the changes
   ansible.scm.git_publish:
     path: "{{ repository['path'] }}"
-  when: token is not defined
+  when: token is undefined
