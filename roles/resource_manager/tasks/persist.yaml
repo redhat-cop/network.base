@@ -13,26 +13,14 @@
   ansible.builtin.set_fact:
     network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
 
+- name: Set default path
+  ansible.builtin.set_fact:
+    inventory_directory: "."
+  when: inventory_directory is not defined
 
 - name: Include retrieve tasks
   ansible.builtin.include_tasks: includes/retrieve.yaml
-  when: origin is defined 
-
-# - name: Retrieve a repository from a distant location and make it available locally
-#   ansible.scm.git_retrieve:
-#     origin:
-#       url: "{{ origin }}"
-#     parent_directory: "{{ inventory_directory }}"
-#   register: repository
-#   when: origin is defined 
-
-# - name: Retrieve a repository from a distant location and make it available locally
-#   ansible.scm.git_retrieve:
-#     origin:
-#       url: git@github.com:rohitthakur2590/network_validated_content_demo.git
-#     parent_directory: "/home/rothakur/ansible-collections/collections/ansible_collections/network/bgp/"
-#   register: repository
-#   when: origin is defined 
+  when: origin is defined
 
 - name: Include build tasks
   ansible.builtin.include_tasks: includes/build.yml
@@ -40,5 +28,4 @@
 
 - name: Include build tasks
   ansible.builtin.include_tasks: includes/publish.yaml
-  when: origin is defined 
-
+  when: origin is defined
