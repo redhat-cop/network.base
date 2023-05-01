@@ -4,6 +4,7 @@
     origin:
       url: "{{ origin }}"
       token: "{{ token }}"
+    timeout: 120
     parent_directory: "{{ inventory_directory }}"
   when: token is defined
   register: repository
@@ -12,6 +13,7 @@
   ansible.scm.git_retrieve:
     origin:
       url: "{{ origin }}"
+    timeout: 120
     parent_directory: "{{ inventory_directory }}"
-  when: token is undefined
   register: repository
+  when: token is undefined
