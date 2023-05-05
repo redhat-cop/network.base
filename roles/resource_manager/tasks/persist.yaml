@@ -13,7 +13,7 @@
   ansible.builtin.set_fact:
     network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
 
-- name: resolve inventory
+- name: Resolve inventory
   ansible.builtin.include_tasks: includes/inventory.yaml
 
 - name: Include retrieve tasks

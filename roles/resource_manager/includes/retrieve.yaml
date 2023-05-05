@@ -26,6 +26,6 @@
     repository: "{{ result }}"
   when: result['changed']
 
-- name: Update Inventory Path 
+- name: Update Inventory Path
   ansible.builtin.set_fact:
     inventory_path: "{{ repository['path'] }}"
