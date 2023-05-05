@@ -9,18 +9,16 @@
     resources: "{{ network_resources_list['modules'] }}"
   when: resources is undefined
 
-- name: Set Netwrok resources
+- name: Set Network resources
   ansible.builtin.set_fact:
     network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
 
-- name: Set default path
-  ansible.builtin.set_fact:
-    inventory_directory: "."
-  when: inventory_directory is not defined
+- name: resolve inventory
+  ansible.builtin.include_tasks: includes/inventory.yaml
 
 - name: Include retrieve tasks
   ansible.builtin.include_tasks: includes/retrieve.yaml
-  when: origin is defined
+  when: data_store.scm is defined
 
 - name: Include build tasks
   ansible.builtin.include_tasks: includes/build.yml
@@ -28,4 +26,4 @@
 
 - name: Include build tasks
   ansible.builtin.include_tasks: includes/publish.yaml
-  when: origin is defined
+  when: data_store.scm.origin is defined

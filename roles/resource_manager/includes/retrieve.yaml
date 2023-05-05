@@ -2,18 +2,30 @@
 - name: Retrieve a repository from a distant location and make it available locally
   ansible.scm.git_retrieve:
     origin:
-      url: "{{ origin }}"
-      token: "{{ token }}"
-    timeout: 120
+      url: "{{ data_store['scm']['origin']['url'] }}"
+      token: "{{ data_store['scm']['origin']['token'] }}"
     parent_directory: "{{ inventory_directory }}"
-  when: token is defined
-  register: repository
+  when: data_store.scm.origin.token is defined
+  register: result
+
+- name: Set Path
+  ansible.builtin.set_fact:
+    repository: "{{ result }}"
+  when: result['changed']
 
 - name: Retrieve a repository from a distant location and make it available locally
   ansible.scm.git_retrieve:
     origin:
-      url: "{{ origin }}"
-    timeout: 120
+      url: "{{ data_store['scm']['origin']['url'] }}"
     parent_directory: "{{ inventory_directory }}"
-  register: repository
-  when: token is undefined
+  register: result
+  when: data_store.scm.origin.token is undefined
+
+- name: Set Path
+  ansible.builtin.set_fact:
+    repository: "{{ result }}"
+  when: result['changed']
+
+- name: Update Inventory Path 
+  ansible.builtin.set_fact:
+    inventory_path: "{{ repository['path'] }}"

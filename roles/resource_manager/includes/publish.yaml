@@ -3,11 +3,12 @@
   ansible.scm.git_publish:
     path: "{{ repository['path'] }}"
     timeout: 120
-  when: token is undefined
+  when: data_store.scm.origin.token is undefined
 
 - name: Publish the changes
   ansible.scm.git_publish:
     path: "{{ repository['path'] }}"
-    token: "{{ token }}"
+    token: "{{ data_store['scm']['origin']['token'] }}"
+    user: "{{ data_store['scm']['origin']['user'] }}"
     timeout: 120
-  when: token is defined
+  when: data_store.scm.origin.token is defined
