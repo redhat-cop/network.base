@@ -4,6 +4,7 @@
     resource: "{{ (rms.path | basename).split('.') | first }}"
 
 - name: "Start detecting config drift"
+  when: resource in resources
   block:
     - name: Grab the resource facts
       ansible.builtin.include_vars:
@@ -29,4 +30,3 @@
       ansible.builtin.fail:
         msg: "configuration drift is found in {{ result.resource_module_name }} Resource"
       when: result.commands|length != 0
-  when: resource in resources

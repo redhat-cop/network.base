@@ -7,4 +7,4 @@
     state: "{{ state }}"
   when:
     - lst in resources
-    - "{{ module_vars[resource] }}"
+    - module_vars[resource]

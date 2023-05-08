@@ -1,12 +1,14 @@
 ---
-- name: Set default path
-  ansible.builtin.set_fact:
-    inventory_directory: ./inventory
-  when: inventory_directory is not defined
+- name: Resolve inventory
+  ansible.builtin.include_tasks: includes/inventory.yaml
+
+- name: Retrieve host vars and save locally
+  ansible.builtin.include_tasks: includes/retrieve.yaml
+  when: data_store.scm is defined
 
 - name: Get list of SOT files
   ansible.builtin.find:
-    paths: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}"
+    paths: "{{ inventory_path }}/host_vars/{{ inventory_hostname }}"
     recurse: false
     patterns: "*.yaml"
     file_type: file
@@ -21,4 +23,5 @@
   ansible.builtin.include_tasks: includes/configure.yaml
   loop: "{{ found_directories.files }}"
   loop_control:
-    label: "{{ item.path | basename }}"
+    loop_var: file
+    label: "{{ file.path | basename }}"

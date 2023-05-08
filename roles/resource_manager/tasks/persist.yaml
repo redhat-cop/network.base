@@ -9,10 +9,23 @@
     resources: "{{ network_resources_list['modules'] }}"
   when: resources is undefined
 
-- name: Set Netwrok resources
+- name: Set Network resources
   ansible.builtin.set_fact:
     network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
+
+- name: Resolve inventory
+  ansible.builtin.include_tasks: includes/inventory.yaml
+
+- name: Include retrieve tasks
+  ansible.builtin.include_tasks: includes/retrieve.yaml
+  when: data_store.scm is defined
 
 - name: Include build tasks
   ansible.builtin.include_tasks: includes/build.yml
   loop: "{{ network_resources['actionable'] }}"
+  loop_control:
+    loop_var: res
+
+- name: Include build tasks
+  ansible.builtin.include_tasks: includes/publish.yaml
+  when: data_store.scm.origin is defined
