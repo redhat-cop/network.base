@@ -1,12 +1,28 @@
 ---
-- name: Set default path
+- name: Get the supported resource modules
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+  register: network_resources_list
+
+- name: Set resources
   ansible.builtin.set_fact:
-    inventory_directory: ./inventory
-  when: inventory_directory is not defined
+    resources: "{{ network_resources_list['modules'] }}"
+  when: resources is undefined
+
+- name: Set Network resources
+  ansible.builtin.set_fact:
+    network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
+
+- name: Resolve inventory
+  ansible.builtin.include_tasks: includes/inventory.yaml
+
+- name: Retrieve a repository from a distant location and make it available locally
+  ansible.builtin.include_tasks: includes/retrieve.yaml
+  when: data_store.scm is defined
 
 - name: Get list of SOT files
   ansible.builtin.find:
-    paths: "{{ inventory_directory }}/host_vars/{{ inventory_hostname }}"
+    paths: "{{ inventory_path }}/host_vars/{{ inventory_hostname }}"
     recurse: false
     patterns: "*.yaml"
     file_type: file
@@ -22,6 +38,7 @@
   loop: "{{ found_directories.files }}"
   loop_control:
     loop_var: rms
+    label: "{{ rms.path | basename }}"
   when:
     - resources is defined
 
