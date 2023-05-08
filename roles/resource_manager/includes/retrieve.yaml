@@ -1,30 +1,32 @@
 ---
-- name: Retrieve a repository from a distant location and make it available locally
-  ansible.scm.git_retrieve:
-    origin:
-      url: "{{ data_store['scm']['origin']['url'] }}"
-      token: "{{ data_store['scm']['origin']['token'] }}"
-    parent_directory: "{{ inventory_directory }}"
+- name: Perform retrieve with provided credentials
   when: data_store.scm.origin.token is defined
-  register: result
+  block:
+    - name: Retrive the host vars with provided token access
+      ansible.scm.git_retrieve:
+        origin:
+          url: "{{ data_store['scm']['origin']['url'] }}"
+          token: "{{ data_store['scm']['origin']['token'] }}"
+        parent_directory: "{{ inventory_directory }}"
+      register: result
 
-- name: Set Path
-  ansible.builtin.set_fact:
-    repository: "{{ result }}"
-  when: result['changed']
+    - name: Update data store path
+      ansible.builtin.set_fact:
+        repository: "{{ result }}"
 
-- name: Retrieve a repository from a distant location and make it available locally
-  ansible.scm.git_retrieve:
-    origin:
-      url: "{{ data_store['scm']['origin']['url'] }}"
-    parent_directory: "{{ inventory_directory }}"
-  register: result
+- name: Perform retrieve with default settings
   when: data_store.scm.origin.token is undefined
+  block:
+    - name: Retrieve host vars with defualt access
+      ansible.scm.git_retrieve:
+        origin:
+          url: "{{ data_store['scm']['origin']['url'] }}"
+        parent_directory: "{{ inventory_directory }}"
+      register: result
 
-- name: Set Path
-  ansible.builtin.set_fact:
-    repository: "{{ result }}"
-  when: result['changed']
+    - name: Update data store path
+      ansible.builtin.set_fact:
+        repository: "{{ result }}"
 
 - name: Update Inventory Path
   ansible.builtin.set_fact:
