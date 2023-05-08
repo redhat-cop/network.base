@@ -11,7 +11,7 @@
 - name: Set Path
   ansible.builtin.set_fact:
     repository: "{{ result }}"
-  when: result['changed'] == true
+  when: result['changed']
 
 - name: Retrieve a repository from a distant location and make it available locally
   ansible.scm.git_retrieve:
@@ -24,7 +24,7 @@
 - name: Set Path
   ansible.builtin.set_fact:
     repository: "{{ result }}"
-  when: result['changed'] == true
+  when: result['changed']
 
 - name: Update Inventory Path
   ansible.builtin.set_fact:
