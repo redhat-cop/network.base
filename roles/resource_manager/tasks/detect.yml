@@ -30,11 +30,11 @@
 
 - name: Set default state as 'overridden'
   ansible.builtin.set_fact:
-    state: 'overridden'
+    state: "overridden"
   when: state is not defined
 
 - name: Include check_drift task
-  ansible.builtin.include_tasks: includes/check_drift.yaml
+  ansible.builtin.include_tasks: includes/check_drift.yml
   loop: "{{ found_directories.files }}"
   loop_control:
     loop_var: rms

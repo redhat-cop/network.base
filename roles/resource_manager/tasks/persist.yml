@@ -14,10 +14,10 @@
     network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
 
 - name: Resolve inventory
-  ansible.builtin.include_tasks: includes/inventory.yaml
+  ansible.builtin.include_tasks: includes/inventory.yml
 
 - name: Include retrieve tasks
-  ansible.builtin.include_tasks: includes/retrieve.yaml
+  ansible.builtin.include_tasks: includes/retrieve.yml
   when: data_store.scm is defined
 
 - name: Include build tasks
@@ -27,5 +27,5 @@
     loop_var: res
 
 - name: Include build tasks
-  ansible.builtin.include_tasks: includes/publish.yaml
+  ansible.builtin.include_tasks: includes/publish.yml
   when: data_store.scm.origin is defined

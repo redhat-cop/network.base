@@ -1,9 +1,9 @@
 ---
 - name: Resolve inventory
-  ansible.builtin.include_tasks: includes/inventory.yaml
+  ansible.builtin.include_tasks: includes/inventory.yml
 
 - name: Retrieve host vars and save locally
-  ansible.builtin.include_tasks: includes/retrieve.yaml
+  ansible.builtin.include_tasks: includes/retrieve.yml
   when: data_store.scm is defined
 
 - name: Get list of SOT files
@@ -20,7 +20,7 @@
   when: state is not defined
 
 - name: Rectify drift
-  ansible.builtin.include_tasks: includes/configure.yaml
+  ansible.builtin.include_tasks: includes/configure.yml
   loop: "{{ found_directories.files }}"
   loop_control:
     loop_var: file
