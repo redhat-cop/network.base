@@ -16,3 +16,5 @@
 - name: Include build tasks
   ansible.builtin.include_tasks: includes/build.yml
   loop: "{{ network_resources['actionable'] }}"
+  loop_control:
+    loop_var: res
