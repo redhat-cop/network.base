@@ -8,149 +8,263 @@ This role provides a single platform-agnostics entry point to manage all the res
 
 **Capabilities**
 ```
-- Use list task to get the list of resource modules supported for a given network OS.
-- Use gather task to gather the facts of supported resource modules for a given network OS.
-- Use configure task to perform a single operation (for example, merged) for a given network OS.
-- Use persis task to fetch the facts and save into inventory host vars files.
-- Use depoy task to push the saved inventory host vars on to the network appliance.
+- Use persist action to fetch the facts and save into inventory host vars files.
+- Use depoy action to push the saved inventory host vars on to the network appliance.
+- Use gather action to gather the facts of supported resource modules for a given network OS.
+- Use detect action to find the config differences between running config and provided config.
+- Use remediate action to override running config with provided config if there is any difference.
+- Use list action to get the list of resource modules supported for a given network OS.
+- Use configure action to perform a single operation (for example, merged) for a given network OS.
 ```
-### Examples
-## Using list task
-Get the list of resource modules for given ansible_network_os
+# Examples
+
+## Using persist action
+
+#### fetch resource facts and build local inventory host_vars.
 ```yaml
 run.yml
 ---
-- hosts: ios
-  gather_facts: no
+- hosts: rtr1
+  gather_facts: true
   tasks:
-  - name: invoke list function
-    include_role:
-      name: resource_manager
+  - name: Network Resource Manager
+    ansible.builtin.include_role:
+      name: network.base.resource_manager
     vars:
-      ansible_network_os: cisco.ios.ios
-      perform_task: list
-```
-## Using gather task
-Get the resource facts for provided resources for given ansible_network_os
-```yaml
-run.yml
----
-- hosts: ios
-  gather_facts: no
-  tasks:
-  - name: invoke gather function
-    include_role:
-      name: resource_manager
-    vars:
-      perform_task: gather
+      action: persist
       ansible_network_os: cisco.ios.ios
       resources:
         - 'interfaces'
         - 'l2_interfaces'
         - 'l3_interfaces'
+        - 'bgp_global'
+        - 'bgp_address_family'
+        - 'ospfv2'
+        - 'ospf_interfaces'
+        - 'ospfv3
+      data_store:
+        local: "~/backup/network"
 ```
-## Using persist task
-Get the resource facts for provided resources and build inventory host_vars for given ansible_network_os
+
+#### fetch all network resource facts and publish inventory host_vars to remote repository.
 ```yaml
 run.yml
 ---
-- hosts: ios
-  gather_facts: no
+- hosts: rtr1
+  gather_facts: true
   tasks:
-  - name: invoke gather function
-    include_role:
-      name: resource_manager
+  - name: Network Resource Manager
+    ansible.builtin.include_role:
+      name: network.base.resource_manager
     vars:
-      perform_task: persist
-      inventory_directory: ./inventory
+      action: persist
+      ansible_network_os: cisco.ios.ios
+      data_store:
+        scm:  
+          origin:
+            url: https://github.com/rohitthakur2590/network_validated_content_automation.git
+            token: "{{ GH_PAT }}"
+            user:
+              name: ansiblegithub
+              email: ansible@ansible.com
+```
+
+## Using deploy action
+#### Read all host_vars from peristed local inventory and deploy changes to running-config.
+```yaml
+run.yml
+---
+- hosts: rtr1
+  gather_facts: true
+  tasks:
+  - name: Network Resource Manager
+    ansible.builtin.include_role:
+      name: network.base.resource_manager
+    vars:
+      action: deploy
+      ansible_network_os: cisco.ios.ios
+      resources:
+        - 'interfaces'
+        - 'l2_interfaces'
+      data_store:
+        local: "~/backup/network"
+```
+
+#### Read provided resources host vars from remote repository and deploy changes to running-config.
+```yaml
+run.yml
+---
+- hosts: rtr1
+  gather_facts: true
+  tasks:
+  - name: Network Resource Manager
+    ansible.builtin.include_role:
+      name: network.base.resource_manager
+    vars:
+      action: deploy
+      ansible_network_os: cisco.ios.ios
+      resources:
+        - 'interfaces'
+        - 'l2_interfaces'
+      data_store:
+        scm:  
+          origin:
+            url: https://github.com/rohitthakur2590/network_validated_content_automation.git
+            token: "{{ GH_PAT }}"
+            user:
+              name: githubusername
+              email: youremail@example.com
+```
+
+## Using gather action
+#### Fetch facts for provided network resources.
+
+```yaml
+run.yml
+---
+- hosts: rtr1
+  gather_facts: true
+  tasks:
+  - name: Network Resource Manager
+    ansible.builtin.include_role:
+      name: network.base.resource_manager
+    vars:
+      ansible_network_os: cisco.ios.ios
+      action: gather
+      resources:
+        - 'bgp_global'
+        - 'bgp_address_family'
+```
+
+## Using detect action
+#### Detect configuration drift between local host vars and running config. In this action 'overridden' state is used with 'check_mode=True'
+
+```yaml
+run.yml
+---
+- hosts: rtr1
+  gather_facts: true
+  tasks:
+  - name: Network Resource Manager
+    ansible.builtin.include_role:
+      name: network.base.resource_manager
+    vars:
+      action: detect
       ansible_network_os: cisco.ios.ios
       resources:
         - 'interfaces'
         - 'l2_interfaces'
         - 'l3_interfaces'
+      data_store:
+        local: "~/backup/network"
 ```
+
+#### Detect configuration drift between remote host-vars repository and running config. In this action 'overridden' state is used with 'check_mode=True'
+
+```yaml
+run.yml
+---
+- hosts: rtr1
+  gather_facts: true
+  tasks:
+  - name: Network Resource Manager
+    ansible.builtin.include_role:
+      name: network.base.resource_manager
+    vars:
+      action: detect
+      ansible_network_os: cisco.ios.ios
+      data_store:
+        scm:  
+          origin:
+            url: https://github.com/rohitthakur2590/network_validated_content_automation.git
+            token: "{{ GH_PAT }}"
+            user:
+              name: githubusername
+              email: youremail@example.com
+```
+
+## Using remediate task
+#### Remediate configuration drift between local inventory host-vars and running config for given network resources.
+##### [CAUTION !] This action will override the running-config 
+```yaml
+run.yml
+---
+- hosts: rtr1
+  gather_facts: true
+  tasks:
+  - name: Network Resource Manager
+      ansible.builtin.include_role:
+        name: network.base.resource_manager
+      vars:
+        action: remediate
+        ansible_network_os: cisco.ios.ios
+        resources:
+          - 'interfaces'
+          - 'l2_interfaces'
+        data_store:
+          local: "~/backup/network"
+```
+#### Remediate configuration drift between remote inventory host-vars and running config for given network resources.
+##### [CAUTION !] This action will override the running-config 
+```yaml
+run.yml
+---
+- hosts: rtr1
+  gather_facts: true
+  tasks:
+  - name: Network Resource Manager
+      ansible.builtin.include_role:
+        name: network.base.resource_manager
+      vars:
+        action: remediate
+        ansible_network_os: cisco.ios.ios
+        resources:
+          - 'interfaces'
+          - 'l2_interfaces'
+        data_store:
+          scm:  
+            origin:
+              url: https://github.com/rohitthakur2590/network_validated_content_automation.git
+              token: "{{ GH_PAT }}"
+              user:
+                name: githubusername
+                email: youremail@example.com
+```
+## Using list action
+#### Get the list of supported resource modules for given ansible_network_os
+```yaml
+run.yml
+---
+- hosts: rtr1
+  gather_facts: false
+  tasks:
+  - name: Network Resource Manager
+    ansible.builtin.include_role:
+      name: network.base.resource_manager
+    vars:
+      action: list
+      ansible_network_os: cisco.ios.ios
+```
+
 ## Using config task
-Invoke single operation for provided resource with provided configuration and state for given ansible_network_os
+#### Invoke single operation for provided resource with provided configuration and state for given ansible_network_os
 ```yaml
 run.yml
 ---
-- hosts: ios
-  gather_facts: no
+- hosts: rtr1
+  gather_facts: true
   tasks:
-  - name: invoke configure function
-    include_role:
-      name: resource_manager
+  - name: Network Resource Manager
+    ansible.builtin.include_role:
+      name: network.base.resource_manager
     vars:
+      action: configure
       ansible_network_os: cisco.ios.ios
       resource: interfaces
-      perform_task: configure
       config:
         - name: "GigabitEthernet0/0"
           description: "Edited with Configure operation"
       state: merged
-```
-## Using deploy task
-Perform ansible resource module supported operation with inventory host_vars as provided config for given ansible_network_os.
-```yaml
-run.yml
----
-- hosts: ios
-  gather_facts: no
-  tasks:
-  - name: invoke deploy function
-    include_role:
-      name: resource_manager
-    vars:
-      inventory_directory: ./inventory
-      ansible_network_os: cisco.ios.ios
-      perform_task: deploy
-      state: merged
-      resources:
-        - 'interfaces'
-        - '!l2_interfaces'
-        - '!l3_interfaces'
-        - '!all'
-```
-## Using detect task
-Detect configuration drift for given network resources for given ansible_network_os. In this action 'overridden' state is used with 'check_mode=True'
-```yaml
-run.yml
----
-- hosts: iosxr
-  gather_facts: no
-  tasks:
-  - name: invoke gather function
-    include_role:
-      name: resource_manager
-    vars:
-      perform_task: detect
-      inventory_directory: ./inventory
-      ansible_network_os: cisco.iosxr.iosxr
-      resources:
-        - 'interfaces'
-        - 'l2_interfaces'
-        - 'l3_interfaces'
-```
-
-## Using remediate task
-Remediate configuration drift for given network resources for given ansible_network_os. In this action 'overridden' state of given resource module is used'
-```yaml
-run.yml
----
-- hosts: iosxr
-  gather_facts: no
-  tasks:
-  - name: invoke remediate function
-    include_role:
-      name: resource_manager
-    vars:
-      perform_task: remediate
-      inventory_directory: ./inventory
-      ansible_network_os: cisco.iosxr.iosxr
-      resources:
-        - 'interfaces'
-        - 'l2_interfaces'
-        - 'l3_interfaces'
 ```
 ### See Also:
 
