@@ -18,7 +18,7 @@
 
 - name: Include retrieve tasks
   ansible.builtin.include_tasks: includes/retrieve.yaml
-  when: data_store.scm is defined
+  when: data_store['scm'] is defined
 
 - name: Include build tasks
   ansible.builtin.include_tasks: includes/build.yml
