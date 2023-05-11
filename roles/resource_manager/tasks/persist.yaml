@@ -4,7 +4,7 @@
     os_name: "{{ ansible_network_os }}"
   register: network_resources_list
 
-- name: Set resources
+- name: Set default resources
   ansible.builtin.set_fact:
     resources: "{{ network_resources_list['modules'] }}"
   when: resources is undefined
