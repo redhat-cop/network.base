@@ -18,7 +18,7 @@
 
 - name: Retrieve a repository from a distant location and make it available locally
   ansible.builtin.include_tasks: includes/retrieve.yaml
-  when: data_store.scm is defined
+  when: data_store['scm'] is defined
 
 - name: Get list of SOT files
   ansible.builtin.find:
