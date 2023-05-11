@@ -5,6 +5,19 @@ Network Base Collection Release Notes
 .. contents:: Topics
 
 
+v3.0.0
+======
+
+Bugfixes
+--------
+
+- provide correct loop var name when running gather task.
+
+Documentation Changes
+---------------------
+
+- Update README.md with data_store structure changes and scm enablement.
+
 v2.1.0
 ======
 
