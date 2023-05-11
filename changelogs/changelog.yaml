@@ -57,3 +57,14 @@ releases:
     release_date: '2023-02-23'
   2.1.0:
     release_date: '2023-04-18'
+  3.0.0:
+    changes:
+      bugfixes:
+      - provide correct loop var name when running gather task.
+      doc_changes:
+      - Update README.md with data_store structure changes and scm enablement.
+    fragments:
+    - fix_gather_loop.yaml
+    - update_conditions.yaml
+    - update_readme.yaml
+    release_date: '2023-05-11'

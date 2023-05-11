@@ -1,3 +1,0 @@
----
-bugfixes:
-  - provide correct loop var name when running gather task.
