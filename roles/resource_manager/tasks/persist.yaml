@@ -11,7 +11,7 @@
 
 - name: Set Network resources
   ansible.builtin.set_fact:
-    network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
+    resource_manager_network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
 
 - name: Resolve inventory
   ansible.builtin.include_tasks: includes/inventory.yaml
@@ -22,7 +22,7 @@
 
 - name: Include build tasks
   ansible.builtin.include_tasks: includes/build.yaml
-  loop: "{{ network_resources['actionable'] }}"
+  loop: "{{ resource_manager_network_resources['actionable'] }}"
   loop_control:
     loop_var: res
 

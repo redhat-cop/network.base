@@ -6,12 +6,12 @@
 
 - name: Set resources
   ansible.builtin.set_fact:
-    resources: "{{ network_resources_list['modules'] }}"
-  when: resources is undefined
+    resource_manager_resources: "{{ network_resources_list['modules'] }}"
+  when: resource_manager_resources is undefined
 
 - name: Set Network resources
   ansible.builtin.set_fact:
-    network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
+    resource_manager_network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resource_manager_resources) }}"
 
 - name: Resolve inventory
   ansible.builtin.include_tasks: includes/inventory.yaml
@@ -26,7 +26,7 @@
     recurse: false
     patterns: "*.yaml"
     file_type: file
-  register: found_directories
+  register: resource_manager_found_directories
 
 - name: Set default state as 'overridden'
   ansible.builtin.set_fact:
@@ -35,12 +35,12 @@
 
 - name: Include check_drift task
   ansible.builtin.include_tasks: includes/check_drift.yaml
-  loop: "{{ found_directories.files }}"
+  loop: "{{ resource_manager_found_directories.files }}"
   loop_control:
     loop_var: rms
     label: "{{ rms.path | basename }}"
   when:
-    - resources is defined
+    - resource_manager_resources is defined
 
 - name: Detect drift
   ansible.builtin.debug:

@@ -12,7 +12,7 @@
     recurse: false
     patterns: "*.yaml"
     file_type: file
-  register: found_directories
+  register: resource_manager_found_directories
 
 - name: Set state as overridden to restore config
   ansible.builtin.set_fact:
@@ -21,7 +21,7 @@
 
 - name: Rectify drift
   ansible.builtin.include_tasks: includes/configure.yaml
-  loop: "{{ found_directories.files }}"
+  loop: "{{ resource_manager_found_directories.files }}"
   loop_control:
     loop_var: file
     label: "{{ file.path | basename }}"

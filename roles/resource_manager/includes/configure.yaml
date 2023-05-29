@@ -1,9 +1,9 @@
 ---
 - name: Set facts
   ansible.builtin.set_fact:
-    name: "{{ ansible_network_os }}_{{ (file.path | basename).split('.') | first }}"
-    resource: "{{ (file.path | basename).split('.') | first }}"
-    lst: "{{ (file.path | basename).split('.') | first }}"
+    resource_manager_name: "{{ ansible_network_os }}_{{ (file.path | basename).split('.') | first }}"
+    resource_manager_resource: "{{ (file.path | basename).split('.') | first }}"
+    resource_manager_lst: "{{ (file.path | basename).split('.') | first }}"
 
 - name: Grab the resource facts
   ansible.builtin.include_vars:
@@ -23,8 +23,8 @@
 - name: Apply configuration
   ansible.netcommon.network_resource:
     os_name: "{{ ansible_network_os }}"
-    name: "{{ name.split('.')[-1] }}"
-    config: "{{ module_vars[resource] }}"
+    name: "{{ resource_manager_name.split('.')[-1] }}"
+    config: "{{ module_vars[resource_manager_resource] }}"
     state: "{{ state }}"
   when:
     - resources is not defined
