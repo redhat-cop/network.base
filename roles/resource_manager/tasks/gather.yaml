@@ -9,12 +9,12 @@
     resources: "{{ network_resources_list['modules'] }}"
   when: resources is undefined
 
-- name: Set network resorces
+- name: Set network resources
   ansible.builtin.set_fact:
     network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
 
 - name: Include build tasks
-  ansible.builtin.include_tasks: includes/build.yml
+  ansible.builtin.include_tasks: includes/build.yaml
   loop: "{{ network_resources['actionable'] }}"
   loop_control:
     loop_var: res

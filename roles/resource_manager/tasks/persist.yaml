@@ -21,7 +21,7 @@
   when: data_store['scm'] is defined
 
 - name: Include build tasks
-  ansible.builtin.include_tasks: includes/build.yml
+  ansible.builtin.include_tasks: includes/build.yaml
   loop: "{{ network_resources['actionable'] }}"
   loop_control:
     loop_var: res
