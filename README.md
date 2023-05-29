@@ -3,8 +3,8 @@
 This repository contains the `network.base` Ansible Collection.
 
 ## Description
-The `network.base` application acts as core for other validated content, as it provides the platform agnostic role called Resource Manager.
-This validated content provides a single platform-agnostics entry point to manage all the resources supported for a given network OS.
+The `network.base` application acts as a core for other validated content, as it provides the platform-agnostic role called Resource Manager.
+This validated content provides a single platform-agnostic entry point to manage all the resources supported for a given network OS.
 
 ## Tested with Ansible
 
@@ -26,20 +26,20 @@ collections:
 ```
 
 **Capabilities**
-- Build Brownfield Inventory: `persist` action enables users to fetch facts for provided resources and persist these
-  YAML formatted structured host-vars either to local or remote data-store which could act as single SOT.
-- Configuration Deployment: `deploy` action enables user to read the host_vars from local or remote data-store and deploys if any changes found.
-- Display Structured Configuration: `gather` action enables users to be able to gather and display the structured facts for provided network resources.
-- Configuration Drift: `detect` action will read the facts from the default/local or remote inventory host_vars and detect if any
+- Build Brownfield Inventory: `persist` operation enables users to fetch facts for provided resources and persist these
+  YAML formatted structured host-vars either to local or remote data store which could act as a single SOT.
+- Configuration Deployment: `deploy` operation enables a user to read the host_vars from a local or remote data store and deploys if any changes are found.
+- Display Structured Configuration: `gather` operation enables users to be able to gather and display the structured facts for provided network resources.
+- Configuration Drift: `detect` operation will read the facts from the default/local or remote inventory host_vars and detect if any
   configuration changes are there between running and provided config configuration.
-- Remediate Configuration: `remediate`  action will read the facts from the provided/default or remote inventory and remediate if there are any configuration changes on the appliances.
-  This is done by overriding the running configuration with read facts from the provided inventory host-vars.
-- Supported Resource Modules Query: `list` action enables users to get the list of supported resource modules for provided network os.
-- Configure: `configure` able to apply configuration in a normalized manner the way resource module does.
+- Remediate Configuration: The `remediate` operation will read the facts from the provided/default or remote inventory and remediate if there are any configuration changes on the appliances.
+  This is done by overriding the running configuration with read facts from the provided inventory host vars.
+- Supported Resource Modules Query: `list` operation enables users to get the list of supported resource modules for provided network os.
+- Configure: `configure` is able to apply configuration in a normalized manner the way resource modules do.
 
 ### Usage
-This platform agnostic role enables the user to create a runtime brownfield inventory with all the configuration in terms of host-vars.
-These host vars are ansible facts which have been gathered through the network resource module.The tasks offered by this role could be observed as below:
+This platform-agnostic role enables the user to create a runtime brownfield inventory with all the configurations in terms of host vars.
+These host vars are ansible facts that have been gathered through the network resource module. The tasks offered by this role could be observed below:
 
 ## Build Brownfield Inventory
 
@@ -54,7 +54,7 @@ run.yml
     ansible.builtin.include_role:
       name: network.base.resource_manager
     vars:
-      action: persist
+      operation: persist
       ansible_network_os: cisco.ios.ios
       resources:
         - 'interfaces'
@@ -69,7 +69,7 @@ run.yml
         local: "~/backup/network"
 ```
 
-#### fetch all network resource facts and publish inventory host_vars to remote repository.
+#### fetch all network resource facts and publish inventory host_vars to a remote repository.
 ```yaml
 run.yml
 ---
@@ -80,10 +80,10 @@ run.yml
     ansible.builtin.include_role:
       name: network.base.resource_manager
     vars:
-      action: persist
+      operation: persist
       ansible_network_os: cisco.ios.ios
       data_store:
-        scm:  
+        scm:
           origin:
             url: https://github.com/rohitthakur2590/network_validated_content_automation.git
             token: "{{ GH_PAT }}"
@@ -93,7 +93,7 @@ run.yml
 ```
 
 ## Configuration Deployment
-#### Read all host_vars from peristed local inventory and deploy changes to running-config.
+#### Read all host_vars from persisted local inventory and deploy changes to running-config.
 ```yaml
 run.yml
 ---
@@ -104,7 +104,7 @@ run.yml
     ansible.builtin.include_role:
       name: network.base.resource_manager
     vars:
-      action: deploy
+      operation: deploy
       ansible_network_os: cisco.ios.ios
       resources:
         - 'interfaces'
@@ -113,7 +113,7 @@ run.yml
         local: "~/backup/network"
 ```
 
-#### Read provided resources host vars from remote repository and deploy changes to running-config.
+#### Read provided resources host vars from a remote repository and deploy changes to running-config.
 ```yaml
 run.yml
 ---
@@ -124,13 +124,13 @@ run.yml
     ansible.builtin.include_role:
       name: network.base.resource_manager
     vars:
-      action: deploy
+      operation: deploy
       ansible_network_os: cisco.ios.ios
       resources:
         - 'interfaces'
         - 'l2_interfaces'
       data_store:
-        scm:  
+        scm:
           origin:
             url: https://github.com/rohitthakur2590/network_validated_content_automation.git
             token: "{{ GH_PAT }}"
@@ -153,14 +153,14 @@ run.yml
       name: network.base.resource_manager
     vars:
       ansible_network_os: cisco.ios.ios
-      action: gather
+      operation: gather
       resources:
         - 'bgp_global'
         - 'bgp_address_family'
 ```
 
 ## Configuration Drift
-#### Detect configuration drift between local host vars and running config. In this action 'overridden' state is used with 'check_mode=True'
+#### Detect configuration drift between local host vars and running-config. In this operation 'overridden' state is used with 'check_mode=True'
 
 ```yaml
 run.yml
@@ -172,7 +172,7 @@ run.yml
     ansible.builtin.include_role:
       name: network.base.resource_manager
     vars:
-      action: detect
+      operation: detect
       ansible_network_os: cisco.ios.ios
       resources:
         - 'interfaces'
@@ -182,7 +182,7 @@ run.yml
         local: "~/backup/network"
 ```
 
-#### Detect configuration drift between remote host-vars repository and running config. In this action 'overridden' state is used with 'check_mode=True'
+#### Detect configuration drift between remote host-vars repository and running-config. In this operation 'overridden' state is used with 'check_mode=True'
 
 ```yaml
 run.yml
@@ -194,10 +194,10 @@ run.yml
     ansible.builtin.include_role:
       name: network.base.resource_manager
     vars:
-      action: detect
+      operation: detect
       ansible_network_os: cisco.ios.ios
       data_store:
-        scm:  
+        scm:
           origin:
             url: https://github.com/rohitthakur2590/network_validated_content_automation.git
             token: "{{ GH_PAT }}"
@@ -207,8 +207,8 @@ run.yml
 ```
 
 ## Remediate Configuration
-#### Remediate configuration drift between local inventory host-vars and running config for given network resources.
-##### [CAUTION !] This action will override the running-config 
+#### Remediate configuration drift between local inventory host vars and running config for given network resources.
+##### [CAUTION !] This operation will override the running-config
 ```yaml
 run.yml
 ---
@@ -219,7 +219,7 @@ run.yml
       ansible.builtin.include_role:
         name: network.base.resource_manager
       vars:
-        action: remediate
+        operation: remediate
         ansible_network_os: cisco.ios.ios
         resources:
           - 'interfaces'
@@ -227,8 +227,8 @@ run.yml
         data_store:
           local: "~/backup/network"
 ```
-#### Remediate configuration drift between remote inventory host-vars and running config for given network resources.
-##### [CAUTION !] This action will override the running-config 
+#### Remediate configuration drift between remote inventory host vars and running config for given network resources.
+##### [CAUTION !] This operation will override the running-config
 ```yaml
 run.yml
 ---
@@ -239,13 +239,13 @@ run.yml
       ansible.builtin.include_role:
         name: network.base.resource_manager
       vars:
-        action: remediate
+        operation: remediate
         ansible_network_os: cisco.ios.ios
         resources:
           - 'interfaces'
           - 'l2_interfaces'
         data_store:
-          scm:  
+          scm:
             origin:
               url: https://github.com/rohitthakur2590/network_validated_content_automation.git
               token: "{{ GH_PAT }}"
@@ -265,12 +265,12 @@ run.yml
     ansible.builtin.include_role:
       name: network.base.resource_manager
     vars:
-      action: list
+      operation: list
       ansible_network_os: cisco.ios.ios
 ```
 
 ## Configure
-#### Invoke single operation for provided resource with provided configuration and state for given ansible_network_os
+#### Invoke single operation for a provided resource with provided configuration and state for given ansible_network_os
 ```yaml
 run.yml
 ---
@@ -281,7 +281,7 @@ run.yml
     ansible.builtin.include_role:
       name: network.base.resource_manager
     vars:
-      action: configure
+      operation: configure
       ansible_network_os: cisco.ios.ios
       resource: interfaces
       config:
