@@ -1,0 +1,3 @@
+---
+major_changes:
+  - Rename variable action as operation, on behalf of ansible-lint var-naming error for reserved Ansible keywords.
