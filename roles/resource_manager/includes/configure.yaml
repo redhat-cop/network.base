@@ -12,8 +12,8 @@
 
 - name: Set default state
   ansible.builtin.set_fact:
-    state: 'merged'
-  when: state is not defined
+    resource_manager_state: 'merged'
+  when: resource_manager_state is not defined
 
 - name: Include tasks
   ansible.builtin.include_tasks: includes/edit_resource.yaml
@@ -25,6 +25,6 @@
     os_name: "{{ ansible_network_os }}"
     name: "{{ resource_manager_name.split('.')[-1] }}"
     config: "{{ module_vars[resource_manager_resource] }}"
-    state: "{{ state }}"
+    state: "{{ resource_manager_state }}"
   when:
     - resources is not defined

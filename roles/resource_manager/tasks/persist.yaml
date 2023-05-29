@@ -2,16 +2,16 @@
 - name: Get the supported resource modules
   ansible.netcommon.network_resource:
     os_name: "{{ ansible_network_os }}"
-  register: network_resources_list
+  register: resource_manager_network_resources_list
 
 - name: Set default resources
   ansible.builtin.set_fact:
-    resources: "{{ network_resources_list['modules'] }}"
+    resources: "{{ resource_manager_network_resources_list['modules'] }}"
   when: resources is undefined
 
 - name: Set Network resources
   ansible.builtin.set_fact:
-    resource_manager_network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
+    resource_manager_network_resources: "{{ resource_manager_network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
 
 - name: Resolve inventory
   ansible.builtin.include_tasks: includes/inventory.yaml

@@ -16,7 +16,7 @@
         os_name: "{{ ansible_network_os }}"
         name: "{{ ansible_network_os.split('.')[-1] }}_{{ resource_manager_resource }}"
         config: "{{ module_vars[resource_manager_resource] }}"
-        state: "{{ state }}"
+        state: "{{ resource_manager_state }}"
       check_mode: true
       register: resource_manager_result
 
