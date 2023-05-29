@@ -11,10 +11,10 @@
 
 - name: Set default path
   ansible.builtin.set_fact:
-    resource_manager_inventory_path: "{{ repository['path'] }}"
-  when: repository is defined
+    resource_manager_inventory_path: "{{ resource_manager_repository['path'] }}"
+  when: resource_manager_repository is defined
 
 - name: Set default path
   ansible.builtin.set_fact:
     resource_manager_inventory_path: "{{ resource_manager_inventory_directory }}"
-  when: repository is not defined
+  when: resource_manager_repository is not defined

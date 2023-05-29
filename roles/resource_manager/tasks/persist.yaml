@@ -6,8 +6,8 @@
 
 - name: Set default resources
   ansible.builtin.set_fact:
-    resources: "{{ resource_manager_network_resources_list['modules'] }}"
-  when: resources is undefined
+    resource_manager_resources: "{{ resource_manager_network_resources_list['modules'] }}"
+  when: resource_manager_resources is undefined
 
 - name: Set Network resources
   ansible.builtin.set_fact:

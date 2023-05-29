@@ -4,11 +4,11 @@
     os_name: "{{ ansible_network_os }}"
     name: "{{ ansible_network_os }}_{{ res }}"
     state: gathered
-  register: result
+  register: resource_manager_result
 
 - name: Resource Facts
   ansible.builtin.debug:
-    msg: "{{ result }}"
+    msg: "{{ resource_manager_result }}"
   when:
     - operation != 'persist'
 
@@ -17,8 +17,8 @@
   when:
     - operation == 'persist'
     - ignore_empty is undefined
-    - result["gathered"] != {}
-    - result["gathered"] != []
+    - resource_manager_result["gathered"] != {}
+    - resource_manager_result["gathered"] != []
 
 - name: Include file write task
   ansible.builtin.include_tasks: includes/write_to_file.yaml

@@ -11,7 +11,7 @@
 
 - name: Get list of files
   ansible.builtin.find:
-    paths: "{{ inventory_path }}/host_vars/{{ inventory_hostname }}"
+    paths: "{{ resource_manager_inventory_path }}/host_vars/{{ inventory_hostname }}"
     recurse: false
     patterns: "*.yaml"
     file_type: file
