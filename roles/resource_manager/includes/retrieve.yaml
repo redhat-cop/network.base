@@ -7,7 +7,7 @@
         origin:
           url: "{{ data_store['scm']['origin']['url'] }}"
           token: "{{ data_store['scm']['origin']['token'] }}"
-        parent_directory: "{{ inventory_directory }}"
+        parent_directory: "{{ data_store.scm.parent_directory | default(inventory_directory) }}"
       register: result
 
     - name: Update data store path
@@ -21,7 +21,7 @@
       ansible.scm.git_retrieve:
         origin:
           url: "{{ data_store['scm']['origin']['url'] }}"
-        parent_directory: "{{ inventory_directory }}"
+        parent_directory: "{{ data_store.scm.parent_directory | default(inventory_directory) }}"
       register: result
 
     - name: Update data store path

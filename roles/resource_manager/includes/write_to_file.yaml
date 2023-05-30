@@ -3,10 +3,12 @@
   ansible.builtin.file:
     path: "{{ inventory_path }}/host_vars/{{ inventory_hostname }}"
     state: directory
-    mode: '0755'
+    mode: '0777'
+  delegate_to: localhost
 
 - name: Write each resource to a file
   ansible.builtin.copy:
     content: "{{ {res: result['gathered']} | to_nice_yaml }}"
     dest: "{{ inventory_path }}/host_vars/{{ inventory_hostname }}/{{ res }}.yaml"
-    mode: '0755'
+    mode: '0777'
+  delegate_to: localhost
