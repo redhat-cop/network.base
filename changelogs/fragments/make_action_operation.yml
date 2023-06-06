@@ -1,0 +1,6 @@
+---
+major_changes:
+  - Rename variable action as operation, on behalf of ansible-lint var-naming error for reserved Ansible keywords.
+  - Rename role variables to follow the role_name_var variable naming rule for roles.
+doc_changes:
+  - Fix misspelled words in README, and fix examples.

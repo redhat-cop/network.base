@@ -11,15 +11,15 @@
 
 - name: Get list of files
   ansible.builtin.find:
-    paths: "{{ inventory_path }}/host_vars/{{ inventory_hostname }}"
+    paths: "{{ resource_manager_inventory_path }}/host_vars/{{ inventory_hostname }}"
     recurse: false
     patterns: "*.yaml"
     file_type: file
-  register: found_directories
+  register: resource_manager_found_directories
 
 - name: Include configure task
   ansible.builtin.include_tasks: includes/configure.yaml
-  loop: "{{ found_directories.files }}"
+  loop: "{{ resource_manager_found_directories.files }}"
   loop_control:
     loop_var: file
     label: "{{ file.path | basename }}"

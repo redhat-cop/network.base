@@ -1,9 +1,9 @@
 ---
 - name: Set facts
   ansible.builtin.set_fact:
-    name: "{{ ansible_network_os }}_{{ (file.path | basename).split('.') | first }}"
-    resource: "{{ (file.path | basename).split('.') | first }}"
-    lst: "{{ (file.path | basename).split('.') | first }}"
+    resource_manager_name: "{{ ansible_network_os }}_{{ (file.path | basename).split('.') | first }}"
+    resource_manager_resource: "{{ (file.path | basename).split('.') | first }}"
+    resource_manager_lst: "{{ (file.path | basename).split('.') | first }}"
 
 - name: Grab the resource facts
   ansible.builtin.include_vars:
@@ -12,8 +12,8 @@
 
 - name: Set default state
   ansible.builtin.set_fact:
-    state: 'merged'
-  when: state is not defined
+    resource_manager_state: 'merged'
+  when: resource_manager_state is not defined
 
 - name: Include tasks
   ansible.builtin.include_tasks: includes/edit_resource.yaml
@@ -23,8 +23,8 @@
 - name: Apply configuration
   ansible.netcommon.network_resource:
     os_name: "{{ ansible_network_os }}"
-    name: "{{ name.split('.')[-1] }}"
-    config: "{{ module_vars[resource] }}"
-    state: "{{ state }}"
+    name: "{{ resource_manager_name.split('.')[-1] }}"
+    config: "{{ module_vars[resource_manager_resource] }}"
+    state: "{{ resource_manager_state }}"
   when:
     - resources is not defined

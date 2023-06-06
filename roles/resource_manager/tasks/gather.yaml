@@ -2,19 +2,19 @@
 - name: Gather the supported resource modules
   ansible.netcommon.network_resource:
     os_name: "{{ ansible_network_os }}"
-  register: network_resources_list
+  register: resource_manager_network_resources_list
 
 - name: Set Resources
   ansible.builtin.set_fact:
-    resources: "{{ network_resources_list['modules'] }}"
-  when: resources is undefined
+    resource_manager_resources: "{{ resource_manager_network_resources_list['modules'] }}"
+  when: resource_manager_resources is undefined
 
-- name: Set network resorces
+- name: Set network resources
   ansible.builtin.set_fact:
-    network_resources: "{{ network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
+    resource_manager_network_resources: "{{ resource_manager_network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
 
 - name: Include build tasks
-  ansible.builtin.include_tasks: includes/build.yml
-  loop: "{{ network_resources['actionable'] }}"
+  ansible.builtin.include_tasks: includes/build.yaml
+  loop: "{{ resource_manager_network_resources['actionable'] }}"
   loop_control:
     loop_var: res
