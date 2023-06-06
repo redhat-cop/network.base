@@ -84,6 +84,7 @@ run.yml
       ansible_network_os: cisco.ios.ios
       data_store:
         scm:
+          parent_directory: "/home/rhel"
           origin:
             url: https://github.com/rohitthakur2590/network_validated_content_automation.git
             token: "{{ GH_PAT }}"
@@ -131,6 +132,7 @@ run.yml
         - 'l2_interfaces'
       data_store:
         scm:
+          parent_directory: "/home/rhel"
           origin:
             url: https://github.com/rohitthakur2590/network_validated_content_automation.git
             token: "{{ GH_PAT }}"

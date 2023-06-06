@@ -6,5 +6,5 @@
     config: "{{ module_vars[resource_manager_resource] }}"
     state: "{{ resource_manager_state }}"
   when:
-    - resource_manager_lst in resource_manager_resources
+    - resource_manager_lst in resources
     - module_vars[resource_manager_resource]
