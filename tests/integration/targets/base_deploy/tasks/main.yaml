@@ -33,14 +33,14 @@
         operation: deploy
         resources: "{{ test_resources }}"
         data_store:
-            local: "~/test_backup"
+          local: "~/test_backup"
       register: resource_manager_result
 
     - name: Assert that gresult
       ansible.builtin.assert:
         that:
           - resource_manager_result.changed == false
-  
+ 
   always:
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
