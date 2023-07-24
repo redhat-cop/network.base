@@ -1,0 +1,3 @@
+---
+trivial:
+  - Update tests for gather, persist, remediate and deploy.

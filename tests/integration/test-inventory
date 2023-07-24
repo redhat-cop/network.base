@@ -1,0 +1,13 @@
+[base]
+10.0.150.143
+
+# WORKING SETUP
+[base:vars]
+ansible_network_os=junipernetworks.junos.junos
+ansible_ssh_user=ansible
+ansible_ssh_pass=Ansible
+ansible_connection=ansible.netcommon.netconf
+ansible_python_interpreter: "/usr/bin/python3"
+#ansible_python_interpreter=/home/rothakur/venvs/ansible36/bin/python
+#ansible_ssh_private_key_file=/home/rothakur/.vagrant.d/insecure_private_key
+

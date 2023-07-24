@@ -1,0 +1,56 @@
+---
+- name: Debug
+  ansible.builtin.debug:
+    msg: "START network.base remediate opeartion integration tests on connection={{ ansible_connection }}"
+
+- block:
+    - name: Reset configuration
+      ansible.builtin.include_tasks: _cleanup.yaml
+
+    - name: Set resources
+      ansible.builtin.set_fact:
+        test_resources:
+          - 'interfaces'
+          - 'l2_interfaces'
+          - 'l3_interfaces'
+          - 'bgp_address_family'
+
+    - name: Run network.base validated content with persist operation
+      ansible.builtin.include_role:
+        name: network.base.resource_manager
+      vars:
+        operation: persist
+        remediate_empty: true
+        resources: "{{ test_resources }}"
+        data_store:
+          local: "~/test_backup"
+
+    - name: Assert file generations
+      ansible.builtin.include_tasks: includes/assertions.yaml
+      loop: "{{ test_resources }}"
+      loop_control:
+        loop_var: filename
+
+    - name: Run network.base validated content with remediate operation
+      ansible.builtin.include_role:
+        name: network.base.resource_manager
+      vars:
+        operation: remediate
+        resources: "{{ test_resources }}"
+        data_store:
+            local: "~/test_backup"
+      register: resouce_manager_result
+
+    - name: Assert that result
+      ansible.builtin.assert:
+        that:
+          - resouce_manager_result.changed == false
+  
+  tags: remediate
+  always:
+    - name: Reset configuration
+      ansible.builtin.include_tasks: _cleanup.yaml
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "END network.base remediate opeartion integration tests on connection={{ ansible_connection }}"
