@@ -46,7 +46,7 @@
       ansible.builtin.assert:
         that:
           - resouce_manager_result.changed == false
- 
+
   always:
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
