@@ -1,27 +1,81 @@
-name: Test collection
+---
+name: CI
 
 concurrency:
-  group: ${{ github.head_ref }}
+  group: ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
-on:
+on:  # yamllint disable-line rule:truthy
   pull_request:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   ansible-lint:
     uses: ansible-network/github_actions/.github/workflows/ansible-lint.yml@main
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
+    if: github.event_name == 'pull_request'
   sanity:
     uses: ansible-network/github_actions/.github/workflows/sanity.yml@main
-
+    with:
+      matrix_include: "[]"
+      matrix_exclude: >-
+          [
+            {
+              "ansible-version": "stable-2.9"
+            },
+            {
+              "ansible-version": "stable-2.12",
+            },
+            {
+              "ansible-version": "stable-2.13",
+              "python-version": "3.7"
+            },
+            {
+              "ansible-version": "stable-2.13",
+              "python-version": "3.11"
+            },
+            {
+              "ansible-version": "stable-2.14",
+              "python-version": "3.7"
+            },
+            {
+              "ansible-version": "stable-2.14",
+              "python-version": "3.8"
+            },
+            {
+              "ansible-version": "stable-2.15",
+              "python-version": "3.7"
+            },
+            {
+              "ansible-version": "stable-2.15",
+              "python-version": "3.8"
+            },
+            {
+              "ansible-version": "milestone",
+              "python-version": "3.7"
+            },
+            {
+              "ansible-version": "milestone",
+              "python-version": "3.8"
+            },
+            {
+              "ansible-version": "devel",
+              "python-version": "3.7"
+            },
+            {
+              "ansible-version": "devel",
+              "python-version": "3.8"
+            }
+          ]
   all_green:
-    if: ${{ always() }}
+    if: ${{ always() && (github.event_name != 'schedule') }}
     needs:
-      - changelog
       - ansible-lint
+      - changelog
       - sanity
     runs-on: ubuntu-latest
     steps:
@@ -29,5 +83,5 @@ jobs:
           python -c "assert set([
           '${{ needs.ansible-lint.result }}',
           '${{ needs.changelog.result }}',
-          '${{ needs.sanity.result }}'
+          '${{ needs.sanity.result }}',
           ]) == {'success'}"
