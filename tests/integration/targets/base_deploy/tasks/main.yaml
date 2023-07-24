@@ -41,7 +41,6 @@
         that:
           - resource_manager_result.changed == false
   
-  tags: persist
   always:
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
