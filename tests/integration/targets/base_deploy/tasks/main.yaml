@@ -3,7 +3,8 @@
   ansible.builtin.debug:
     msg: "START network.base deploy opeartion integration tests on connection={{ ansible_connection }}"
 
-- block:
+- name: Cleanup, Read and Deploy
+  block:
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
 
@@ -40,7 +41,7 @@
       ansible.builtin.assert:
         that:
           - resource_manager_result.changed == false
- 
+
   always:
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml

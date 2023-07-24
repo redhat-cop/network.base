@@ -3,14 +3,15 @@
   ansible.builtin.debug:
     msg: "START network.base gather opeartion integration tests on connection={{ ansible_connection }}"
 
-- block:
+- name: Gather and assertion
+  block:
     - name: Run network.base validated content with gather operation
       ansible.builtin.include_role:
         name: network.base.resource_manager
       vars:
         operation: gather
         resources:
-        - interfaces 
+          - interfaces
       register: resouce_manager_result
 
     - name: Assert that gather result

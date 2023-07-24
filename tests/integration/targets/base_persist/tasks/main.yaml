@@ -3,7 +3,8 @@
   ansible.builtin.debug:
     msg: "START network.base persist opeartion integration tests on connection={{ ansible_connection }}"
 
-- block:
+- name: Cleanup, gather and persist
+  block:
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
 
@@ -39,14 +40,14 @@
         operation: deploy
         resources: "{{ test_resources }}"
         data_store:
-            local: "~/test_backup"
+          local: "~/test_backup"
       register: resouce_manager_result
 
     - name: Assert that result
       ansible.builtin.assert:
         that:
           - resouce_manager_result.changed == false
-  
+
   always:
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
