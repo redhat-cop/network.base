@@ -20,14 +20,6 @@
       check_mode: true
       register: resource_manager_result
 
-    - name: Show the difference in configuration
-      ansible.utils.fact_diff:
-        before: "{{ resource_manager_result.before }}"
-        after: "{{ module_vars[resource_manager_resource] }}"
-      when: resource_manager_result.commands|length != 0
-
     - name: Detect if there is config drift.
-      ansible.builtin.fail:
-        msg: "configuration drift is found in {{ resource_manager_result.resource_module_name }} Resource"
-      when:
-        - resource_manager_result.changed
+      ansible.builtin.include_tasks: includes/display_drift.yaml
+      when: (resource_manager_result.changed)

@@ -1,0 +1,9 @@
+---
+- name: Show the difference in configuration
+  ansible.utils.fact_diff:
+    before: "{{ resource_manager_result.before }}"
+    after: "{{ module_vars[resource_manager_resource] }}"
+
+- name: Retrieve a repository from a distant location and make it available locally
+  ansible.builtin.fail:
+    msg: "configuration drift is found in {{ resource_manager_result.resource_module_name }} Resource"
