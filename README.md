@@ -34,21 +34,6 @@ With this configured, simply run the following commands:
 ansible-galaxy collection install network.base
 ```
 
-#### Install from GitHub
-
-```
-ansible-galaxy collection install git+https://github.com/redhat-cop/network.base
-```
-
-You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml` using the format:
-
-```yaml
-collections:
-- name: https://github.com/redhat-cop/network.base.git
-  type: git
-  version: main
-```
-
 **Capabilities**
 - Build Brownfield Inventory: `persist` operation enables users to fetch facts for provided resources and persist these
   YAML formatted structured host-vars either to local or remote data store which could act as a single SOT.

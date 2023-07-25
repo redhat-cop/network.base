@@ -29,4 +29,5 @@
     - name: Detect if there is config drift.
       ansible.builtin.fail:
         msg: "configuration drift is found in {{ resource_manager_result.resource_module_name }} Resource"
-      when: resource_manager_result.commands|length != 0
+      when:
+        - resource_manager_result.changed == true
