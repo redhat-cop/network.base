@@ -1,0 +1,54 @@
+---
+- name: Debug
+  ansible.builtin.debug:
+    msg: "START network.base deploy opeartion integration tests on connection={{ ansible_connection }}"
+
+- name: Cleanup, Read and Deploy
+  block:
+    - name: Reset configuration
+      ansible.builtin.include_tasks: _cleanup.yaml
+
+    - name: Set resources
+      ansible.builtin.set_fact:
+        test_resources:
+          - 'interfaces'
+          - 'l2_interfaces'
+          - 'l3_interfaces'
+          - 'bgp_global'
+          - 'bgp_address_family'
+
+    - name: Set data data_store
+      ansible.builtin.set_fact:
+        test_data_store:
+          local: "~/test_backup"
+
+    - name: Run network.base validated content with deploy operation
+      ansible.builtin.include_role:
+        name: network.base.resource_manager
+      vars:
+        operation: persist
+        persist_empty: true
+        resources: "{{ test_resources }}"
+        data_store: "{{ test_data_store }}"
+
+    - name: Run network.base validated content with deploy operation
+      ansible.builtin.include_role:
+        name: network.base.resource_manager
+      vars:
+        operation: deploy
+        resources: "{{ test_resources }}"
+        data_store: "{{ test_data_store }}"
+      register: resource_manager_result
+
+    - name: Assert that gresult
+      ansible.builtin.assert:
+        that:
+          - resource_manager_result.changed == false
+
+  always:
+    - name: Reset configuration
+      ansible.builtin.include_tasks: _cleanup.yaml
+
+- name: Debug
+  ansible.builtin.debug:
+    msg: "END network.base deploy operation integration tests on connection={{ ansible_connection }}"

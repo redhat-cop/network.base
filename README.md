@@ -1,4 +1,6 @@
 ## Network Base Validated Content
+[![CI](https://github.com/ansible-network/network.base/actions/workflows/tests.yml/badge.svg?event=schedule)](https://github.com/ansible-network/network.base/actions/workflows/tests.yml)
+[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7404/badge)](https://bestpractices.coreinfrastructure.org/projects/7404)
 
 This repository contains the `network.base` Ansible Collection.
 
@@ -11,18 +13,25 @@ This validated content provides a single platform-agnostic entry point to manage
 Tested with ansible-core 2.13 releases.
 
 ## Installation
+#### Install from Automation Hub
+
+To consume this Validated Content from Automation Hub, the following needs to be added to `ansible.cfg`:
 
 ```
-ansible-galaxy collection install git+https://github.com/redhat-cop/network.base
+[galaxy]
+server_list = automation_hub
+
+[galaxy_server.automation_hub]
+url=https://cloud.redhat.com/api/automation-hub/
+auth_url=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+token=<SuperSecretToken>
 ```
+Get the required token from the [Automation Hub Web UI](https://console.redhat.com/ansible/automation-hub/token).
 
-You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml` using the format:
+With this configured, simply run the following commands:
 
-```yaml
-collections:
-- name: https://github.com/redhat-cop/network.base.git
-  type: git
-  version: main
+```
+ansible-galaxy collection install network.base
 ```
 
 **Capabilities**

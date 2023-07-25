@@ -1,0 +1,10 @@
+---
+- name: Task name
+  ansible.builtin.stat:
+    path: "{{ test_data_store['local'] }}/host_vars/{{ inventory_hostname }}/{{ filename }}.yaml"
+  register: result
+
+- name: Assert that gather result
+  ansible.builtin.assert:
+    that:
+      - result.stat.exists == true
