@@ -30,4 +30,4 @@
       ansible.builtin.fail:
         msg: "configuration drift is found in {{ resource_manager_result.resource_module_name }} Resource"
       when:
-        - resource_manager_result.changed == true
+        - resource_manager_result.changed
