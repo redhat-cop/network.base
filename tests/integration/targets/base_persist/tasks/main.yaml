@@ -8,6 +8,11 @@
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
 
+    - name: Set data data_store
+      ansible.builtin.set_fact:
+        test_data_store:
+          local: "~/test_backup"
+
     - name: Set resources
       ansible.builtin.set_fact:
         test_resources:
@@ -24,8 +29,7 @@
         operation: persist
         persist_empty: true
         resources: "{{ test_resources }}"
-        data_store:
-          local: "~/test_backup"
+        data_store: "{{ test_data_store }}"
 
     - name: Assert file generations
       ansible.builtin.include_tasks: includes/assertions.yaml
@@ -39,8 +43,7 @@
       vars:
         operation: deploy
         resources: "{{ test_resources }}"
-        data_store:
-          local: "~/test_backup"
+        data_store: "{{ test_data_store }}"
       register: resouce_manager_result
 
     - name: Assert that result

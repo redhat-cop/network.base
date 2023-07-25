@@ -3,7 +3,7 @@ authors:
   - Rohit Thakur (@rohitthakur2590)
 dependencies:
   "ansible.netcommon": ">=5.1.1"
-  "ansible.utils": '>=2.7.0'
+  "ansible.utils": '>=2.9.0'
 license_file: LICENSE
 name: base
 description: Ansible Network Collection provides platform-agnostic resource management for given network OS.

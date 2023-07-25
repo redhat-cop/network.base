@@ -17,6 +17,11 @@
           - 'bgp_global'
           - 'bgp_address_family'
 
+    - name: Set data data_store
+      ansible.builtin.set_fact:
+        test_data_store:
+          local: "~/test_backup"
+
     - name: Run network.base validated content with deploy operation
       ansible.builtin.include_role:
         name: network.base.resource_manager
@@ -24,8 +29,7 @@
         operation: persist
         persist_empty: true
         resources: "{{ test_resources }}"
-        data_store:
-          local: "~/test_backup"
+        data_store: "{{ test_data_store }}"
 
     - name: Run network.base validated content with deploy operation
       ansible.builtin.include_role:
@@ -33,8 +37,7 @@
       vars:
         operation: deploy
         resources: "{{ test_resources }}"
-        data_store:
-          local: "~/test_backup"
+        data_store: "{{ test_data_store }}"
       register: resource_manager_result
 
     - name: Assert that gresult
