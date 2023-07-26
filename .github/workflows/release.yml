@@ -25,4 +25,4 @@ jobs:
           token=${{ secrets.AH_TOKEN }}
           EOF
           ansible-galaxy collection publish "${TARBALL}"
-
+ 
