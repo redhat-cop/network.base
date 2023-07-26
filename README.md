@@ -1,5 +1,5 @@
 ## Network Base Validated Content
-[![CI](https://github.com/ansible-network/network.base/actions/workflows/tests.yml/badge.svg?event=schedule)](https://github.com/ansible-network/network.base/actions/workflows/tests.yml)
+[![CI](https://github.com/redhat-cop/network.base/actions/workflows/tests.yml/badge.svg?event=schedule)](https://github.com/redhat-cop/network.base/actions/workflows/tests.yml)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7659/badge)](https://bestpractices.coreinfrastructure.org/projects/7659)
 
 This repository contains the `network.base` Ansible Collection.
