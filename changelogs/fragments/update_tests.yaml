@@ -1,5 +1,0 @@
----
-bugfixes:
-  - confirm drift based on changed status rather than commands.
-doc_changes:
-  - Update tests for gather, persist, remediate and deploy.
