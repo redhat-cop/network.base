@@ -77,7 +77,7 @@ jobs:
             {
               "ansible-version": "devel",
               "python-version": "3.9"
-            }
+            },
           ]
   all_green:
     if: ${{ always() && (github.event_name != 'schedule') }}
