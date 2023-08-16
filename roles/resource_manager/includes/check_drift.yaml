@@ -1,5 +1,5 @@
 ---
-- name: Set facts
+- name: Set facts DNM
   ansible.builtin.set_fact:
     resource_manager_resource: "{{ (rms.path | basename).split('.') | first }}"
 
