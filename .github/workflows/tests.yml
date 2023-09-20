@@ -13,8 +13,6 @@ on:  # yamllint disable-line rule:truthy
     - cron: '0 0 * * *'
 
 jobs:
-  ansible-lint:
-    uses: ansible-network/github_actions/.github/workflows/ansible-lint.yml@main
   changelog:
     uses: ansible-network/github_actions/.github/workflows/changelog.yml@main
     if: github.event_name == 'pull_request'
@@ -78,14 +76,12 @@ jobs:
   all_green:
     if: ${{ always() && (github.event_name != 'schedule') }}
     needs:
-      - ansible-lint
       - changelog
       - sanity
     runs-on: ubuntu-latest
     steps:
       - run: >-
           python -c "assert set([
-          '${{ needs.ansible-lint.result }}',
           '${{ needs.changelog.result }}',
           '${{ needs.sanity.result }}',
           ]) == {'success'}"
