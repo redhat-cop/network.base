@@ -87,3 +87,13 @@ releases:
     - support_parent_directory.yaml
     - update_tests.yaml
     release_date: '2023-07-26'
+  4.1.0:
+    changes:
+      doc_changes:
+      - Update badges to refer to the proper GitHub repository.
+      minor_changes:
+      - Add tag support to persist task.
+    fragments:
+    - implement_tag.yaml
+    - update_badge.yaml
+    release_date: '2023-11-29'
