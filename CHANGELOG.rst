@@ -5,6 +5,44 @@ Network Base Collection Release Notes
 .. contents:: Topics
 
 
+v4.1.0
+======
+
+Minor Changes
+-------------
+
+- Add tag support to persist task.
+
+Documentation Changes
+---------------------
+
+- Update badges to refer to the proper GitHub repository.
+
+v4.0.0
+======
+
+Major Changes
+-------------
+
+- Rename role variables to follow the role_name_var variable naming rule for roles.
+- Rename variable action as operation, on behalf of ansible-lint var-naming error for reserved Ansible keywords.
+
+Minor Changes
+-------------
+
+- Add support for parent_directory options.
+
+Bugfixes
+--------
+
+- confirm drift based on changed status rather than commands.
+
+Documentation Changes
+---------------------
+
+- Fix misspelled words in README, and fix examples.
+- Update tests for gather, persist, remediate and deploy.
+
 v3.0.0
 ======
 

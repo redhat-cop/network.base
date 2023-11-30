@@ -2,7 +2,7 @@
 - name: Set default host vars path
   ansible.builtin.set_fact:
     resource_manager_inventory_directory: "."
-  when: data_store['local'] is not defined
+  when: data_store.local is not defined
 
 - name: Set default host vars path
   ansible.builtin.set_fact:

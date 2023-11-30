@@ -68,3 +68,32 @@ releases:
     - update_conditions.yaml
     - update_readme.yaml
     release_date: '2023-05-11'
+  4.0.0:
+    changes:
+      bugfixes:
+      - confirm drift based on changed status rather than commands.
+      doc_changes:
+      - Fix misspelled words in README, and fix examples.
+      - Update tests for gather, persist, remediate and deploy.
+      major_changes:
+      - Rename role variables to follow the role_name_var variable naming rule for
+        roles.
+      - Rename variable action as operation, on behalf of ansible-lint var-naming
+        error for reserved Ansible keywords.
+      minor_changes:
+      - Add support for parent_directory options.
+    fragments:
+    - make_action_operation.yml
+    - support_parent_directory.yaml
+    - update_tests.yaml
+    release_date: '2023-07-26'
+  4.1.0:
+    changes:
+      doc_changes:
+      - Update badges to refer to the proper GitHub repository.
+      minor_changes:
+      - Add tag support to persist task.
+    fragments:
+    - implement_tag.yaml
+    - update_badge.yaml
+    release_date: '2023-11-29'

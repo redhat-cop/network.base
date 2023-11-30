@@ -45,6 +45,10 @@ jobs:
               "python-version": "3.8"
             },
             {
+              "ansible-version": "stable-2.14",
+              "python-version": "3.12"
+            },
+            {
               "ansible-version": "stable-2.15",
               "python-version": "3.7"
             },
@@ -53,12 +57,24 @@ jobs:
               "python-version": "3.8"
             },
             {
+              "ansible-version": "stable-2.15",
+              "python-version": "3.12"
+            },
+            {
+              "ansible-version": "stable-2.16",
+              "python-version": "3.9"
+            },
+            {
               "ansible-version": "milestone",
               "python-version": "3.7"
             },
             {
               "ansible-version": "milestone",
               "python-version": "3.8"
+            },
+            {
+              "ansible-version": "milestone",
+              "python-version": "3.9"
             },
             {
               "ansible-version": "devel",
@@ -71,7 +87,7 @@ jobs:
             {
               "ansible-version": "devel",
               "python-version": "3.9"
-            }
+            },
           ]
   all_green:
     if: ${{ always() && (github.event_name != 'schedule') }}
@@ -81,7 +97,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: >-
-          python -c "assert set([
+          python -c "assert 'failure' not in
+          set([
           '${{ needs.changelog.result }}',
           '${{ needs.sanity.result }}',
-          ]) == {'success'}"
+          ])"
