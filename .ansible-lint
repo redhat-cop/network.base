@@ -3,3 +3,7 @@ profile: production
 
 exclude_paths:
   - changelogs/changelog.yaml
+skip_list:
+  # this rule error out correct vars names for network validated content.
+  - var-naming[no-role-prefix]
+  - no-handler
