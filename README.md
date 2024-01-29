@@ -39,10 +39,6 @@ With this configured, simply run the following commands:
 ansible-galaxy collection install network.base
 ```
 
-## Tested with Ansible
-
-Tested with ansible-core 2.14 releases.
-
 ## Installation
 #### Install from Automation Hub
 
