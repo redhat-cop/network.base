@@ -343,7 +343,7 @@ run.yml
 
 The project uses tox to run `ansible-lint` and `ansible-test sanity`.
 Assuming this repository is checked out in the proper structure,
-e.g. `collections_root/ansible_collections/network/backup`, run:
+e.g. `collections_root/ansible_collections/network/base`, run:
 
 ```shell
   tox -e ansible-lint
@@ -390,7 +390,7 @@ Please read and familiarize yourself with this document.
 
 ## Release notes
 
-Release notes are available [here](https://github.com/redhat-cop/network.backup/blob/main/CHANGELOG.rst).
+Release notes are available [here](https://github.com/redhat-cop/network.base/blob/main/CHANGELOG.rst).
 
 ## Related information
 
