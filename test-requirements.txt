@@ -1,5 +1,3 @@
 black==23.3.0 ; python_version >= '3.9'
 flake8
-mock
 yamllint
-coverage==4.5.4
