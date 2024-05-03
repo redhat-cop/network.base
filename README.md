@@ -39,30 +39,6 @@ With this configured, simply run the following commands:
 ansible-galaxy collection install network.base
 ```
 
-## Installation
-#### Install from Automation Hub
-
-To consume this Validated Content from Automation Hub, the following needs to be added to `ansible.cfg`:
-
-```
-[galaxy]
-server_list = automation_hub
-
-[galaxy_server.automation_hub]
-url=https://console.redhat.com/api/automation-hub/content/published/
-auth_url=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-token=<SuperSecretToken>
-```
-Get the required token from the [Automation Hub Web UI](https://console.redhat.com/ansible/automation-hub/token).
-
-With this configured, simply run the following commands:
-
-```
-ansible-galaxy collection install network.base
-```
-
-
-
 ## Use Cases
 This platform-agnostic role enables the user to create a runtime brownfield inventory with all the configurations in terms of host vars.
 These host vars are ansible facts that have been gathered through the network resource module.
