@@ -7,7 +7,7 @@ on:   # yamllint disable-line rule:truthy
 
 jobs:
   release_automation_hub:
-    uses: ansible/devtools/.github/workflows/release_ah.yml@main
+    uses: ansible/ansible-content-actions/.github/workflows/release_ah.yaml@main
     with:
       environment: ah
     secrets:
