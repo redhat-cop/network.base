@@ -1,0 +1,40 @@
+---
+- name: Get the supported resource modules
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+  register: persist_network_resources_list
+
+- name: Set default resources
+  ansible.builtin.set_fact:
+    persist_resources: "{{ persist_network_resources_list['modules'] }}"
+  when: persist_resources is undefined
+
+- name: Set Network resources
+  ansible.builtin.set_fact:
+    persist_network_resources: "{{ persist_network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
+
+- name: Resolve inventory
+  ansible.builtin.include_tasks: manage_inventory.yaml
+
+- name: Include retrieve tasks
+  ansible.builtin.include_tasks: retrieve.yaml
+  when: data_store['scm'] is defined
+
+- name: Include facts tasks
+  ansible.builtin.include_tasks: facts.yaml
+  loop: "{{ persist_network_resources['actionable'] }}"
+  loop_control:
+    loop_var: res
+
+- name: Include publish with tag tasks
+  ansible.builtin.include_tasks: publish_tag.yaml
+  when:
+    - data_store.scm.origin is defined 
+    - data_store.scm.origin.tag is defined
+
+- name: Include publish without tag tasks
+  ansible.builtin.include_tasks: publish.yaml
+  when:
+    - data_store.scm.origin is defined 
+    - data_store.scm.origin.tag is not defined
+

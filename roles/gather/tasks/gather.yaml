@@ -1,0 +1,20 @@
+---
+- name: Gather the supported resource modules
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+  register: gather_network_resources_list
+
+- name: Set Resources
+  ansible.builtin.set_fact:
+    gather_resources: "{{ gather_network_resources_list['modules'] }}"
+  when: gather_resources is undefined
+
+- name: Set network resources
+  ansible.builtin.set_fact:
+    gather_network_resources: "{{ gather_network_resources_list['modules'] | ansible.utils.param_list_compare(resources) }}"
+
+- name: Include build tasks
+  ansible.builtin.include_tasks: facts.yaml
+  loop: "{{ gather_network_resources['actionable'] }}"
+  loop_control:
+    loop_var: res

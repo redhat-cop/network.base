@@ -1,0 +1,25 @@
+---
+minor_changes:
+   - summary: "Restructured the network.base collection by converting supported operations into separate roles."
+     details: |
+       The following changes were made to the `network.base` collection:
+       - Converted operations like `persist`, `detect`, `remediate`, `deploy`, and `configure` into individual roles for better modularity and clarity.
+       - Each role (`persist`, `detect`, `remediate`, `deploy`, `configure`, `list`, `gather`) now has its own README.md and integration tests.
+       - Updated all integration tests to align with the new role-based structure.
+       - Improved documentation and usage examples for each role to reflect the restructuring.
+     issues:
+       - id: "ANA-502"
+         type: "feature"
+         link: "https://issues.redhat.com/browse/ANA-502"
+     impact: 
+       - "Developers need to update their playbooks to use roles instead of operations."
+       - "Test cases and pipelines relying on operations must be updated to reference the new roles."
+     role_changes:
+       - persist: "Now an independent role for saving network facts to local or remote data stores."
+       - detect: "Now an independent role for identifying configuration drifts."
+       - remediate: "Now an independent role for fixing configuration drifts by applying saved configurations."
+       - deploy: "Now an independent role for deploying configurations based on inventory host_vars."
+       - configure: "Now an independent role for applying configurations in a structured manner."
+       - list: "New role to retrieve supported network resource modules."
+       - gather: "New role to collect and display structured facts for network resources."
+

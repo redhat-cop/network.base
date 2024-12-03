@@ -1,14 +1,14 @@
 ---
 - name: Debug
   ansible.builtin.debug:
-    msg: "START network.base persist opeartion integration tests on connection={{ ansible_connection }}"
+    msg: "START network.base persist operation integration tests on connection={{ ansible_connection }}"
 
-- name: Cleanup, gather and persist
+- name: Cleanup, gather, and persist
   block:
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
 
-    - name: Set data data_store
+    - name: Set data store
       ansible.builtin.set_fact:
         test_data_store:
           local: "~/test_backup"
@@ -17,17 +17,12 @@
       ansible.builtin.set_fact:
         test_resources:
           - 'interfaces'
-          - 'l2_interfaces'
-          - 'l3_interfaces'
-          - 'bgp_global'
-          - 'bgp_address_family'
 
-    - name: Run network.base validated content with persist operation
+    - name: Run persist role to gather and persist facts
       ansible.builtin.include_role:
-        name: network.base.resource_manager
+        name: network.base.persist
       vars:
-        operation: persist
-        persist_empty: true
+        ansible_network_os: "cisco.ios.ios"
         resources: "{{ test_resources }}"
         data_store: "{{ test_data_store }}"
 
@@ -37,19 +32,18 @@
       loop_control:
         loop_var: filename
 
-    - name: Run network.base validated content with persist operation
+    - name: Run deploy role to validate persisted data
       ansible.builtin.include_role:
-        name: network.base.resource_manager
+        name: network.base.deploy
       vars:
-        operation: deploy
         resources: "{{ test_resources }}"
         data_store: "{{ test_data_store }}"
-      register: resouce_manager_result
+      register: deploy_result
 
-    - name: Assert that result
+    - name: Assert that deploy operation did not change state
       ansible.builtin.assert:
         that:
-          - resouce_manager_result.changed == false
+          - deploy_result.changed == false
 
   always:
     - name: Reset configuration
@@ -57,4 +51,4 @@
 
 - name: Debug
   ansible.builtin.debug:
-    msg: "END network.base persist opeartion integration tests on connection={{ ansible_connection }}"
+    msg: "END network.base persist operation integration tests on connection={{ ansible_connection }}"

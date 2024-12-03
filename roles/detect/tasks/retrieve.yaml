@@ -1,0 +1,17 @@
+---
+- name: Retrieve the host vars with token access (if provided)
+  ansible.scm.git_retrieve:
+    origin:
+      url: "{{ data_store['scm']['origin']['url'] }}"
+      token: "{{ data_store['scm']['origin']['token'] | d(None) }}"
+    parent_directory: "{{ data_store.scm.parent_directory | default(detect_inventory_directory) }}"
+  changed_when: false
+  register: detect_result
+
+- name: Update data store path
+  ansible.builtin.set_fact:
+    detect_repository: "{{ detect_result }}"
+
+- name: Update Inventory Path
+  ansible.builtin.set_fact:
+    detect_inventory_path: "{{ detect_repository['path'] }}"

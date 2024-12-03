@@ -1,0 +1,6 @@
+---
+- name: Include tasks
+  ansible.builtin.include_tasks: validation.yaml
+
+- name: Run the platform specific tasks
+  ansible.builtin.include_tasks: persist.yaml

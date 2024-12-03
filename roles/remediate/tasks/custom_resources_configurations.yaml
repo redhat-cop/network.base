@@ -1,0 +1,10 @@
+---
+- name: Apply provided configuration
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+    name: "{{ ansible_network_os.split('.')[-1] }}_{{ remediate_lst }}"
+    config: "{{ module_vars[remediate_resource] }}"
+    state: "{{ remediate_state }}"
+  when:
+    - remediate_lst in resources
+    - module_vars[remediate_resource]

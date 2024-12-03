@@ -1,0 +1,9 @@
+---
+- name: Compare configurations and show the differences
+  ansible.utils.fact_diff:
+    before: "{{ detect_result.before }}"
+    after: "{{ module_vars[detect_resource] }}"
+
+- name: Fail if configuration drift is detected
+  ansible.builtin.fail:
+    msg: "configuration drift is found in {{ detect_result.resource_module_name }} Resource"

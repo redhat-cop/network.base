@@ -1,0 +1,14 @@
+---
+- name: Publish the persist changes
+  ansible.scm.git_publish:
+    path: "{{ persist_repository['path'] }}"
+    timeout: 120
+  when: data_store['scm']['origin']['token'] is undefined
+
+- name: Publish the changes
+  ansible.scm.git_publish:
+    path: "{{ persist_repository['path'] }}"
+    token: "{{ data_store['scm']['origin']['token'] }}"
+    user: "{{ data_store['scm']['origin']['user'] | d({}) }}"
+    timeout: 120
+  when: data_store['scm']['origin']['token'] is defined

@@ -1,0 +1,30 @@
+---
+- name: Set facts
+  ansible.builtin.set_fact:
+    remediate_name: "{{ ansible_network_os }}_{{ (file.path | basename).split('.') | first }}"
+    remediate_resource: "{{ (file.path | basename).split('.') | first }}"
+    remediate_lst: "{{ (file.path | basename).split('.') | first }}"
+
+- name: Grab the resource facts
+  ansible.builtin.include_vars:
+    file: "{{ file.path }}"
+    name: module_vars
+
+- name: Set default state
+  ansible.builtin.set_fact:
+    remediate_state: 'merged'
+  when: remediate_state is not defined
+
+- name: Include tasks
+  ansible.builtin.include_tasks: custom_resources_configurations.yaml
+  when:
+    - resources is defined
+
+- name: Apply configuration
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+    name: "{{ remediate_name.split('.')[-1] }}"
+    config: "{{ module_vars[remediate_resource] }}"
+    state: "{{ remediate_state }}"
+  when:
+    - resources is not defined

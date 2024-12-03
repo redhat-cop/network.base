@@ -12,9 +12,6 @@
       ansible.builtin.set_fact:
         test_resources:
           - 'interfaces'
-          - 'l2_interfaces'
-          - 'l3_interfaces'
-          - 'bgp_address_family'
 
     - name: Set data data_store
       ansible.builtin.set_fact:
@@ -23,9 +20,8 @@
 
     - name: Run network.base validated content with persist operation
       ansible.builtin.include_role:
-        name: network.base.resource_manager
+        name: network.base.persist
       vars:
-        operation: persist
         remediate_empty: true
         resources: "{{ test_resources }}"
         data_store: "{{ test_data_store }}"
@@ -38,17 +34,16 @@
 
     - name: Run network.base validated content with remediate operation
       ansible.builtin.include_role:
-        name: network.base.resource_manager
+        name: network.base.remediate
       vars:
-        operation: remediate
         resources: "{{ test_resources }}"
         data_store: "{{ test_data_store }}"
-      register: resouce_manager_result
+      register: remediate_result
 
     - name: Assert that result
       ansible.builtin.assert:
         that:
-          - resouce_manager_result.changed == false
+          - remediate_result.changed == false
 
   always:
     - name: Reset configuration

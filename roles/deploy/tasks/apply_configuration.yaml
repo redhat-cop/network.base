@@ -1,0 +1,30 @@
+---
+- name: Set facts
+  ansible.builtin.set_fact:
+    deploy_name: "{{ ansible_network_os }}_{{ (file.path | basename).split('.') | first }}"
+    deploy_resource: "{{ (file.path | basename).split('.') | first }}"
+    deploy_lst: "{{ (file.path | basename).split('.') | first }}"
+
+- name: Grab the resource facts
+  ansible.builtin.include_vars:
+    file: "{{ file.path }}"
+    name: module_vars
+
+- name: Set default state
+  ansible.builtin.set_fact:
+    deploy_state: 'merged'
+  when: deploy_state is not defined
+
+- name: Include tasks
+  ansible.builtin.include_tasks: custom_resources_configuration.yaml
+  when:
+    - resources is defined
+
+- name: Apply configuration
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+    name: "{{ deploy_name.split('.')[-1] }}"
+    config: "{{ module_vars[deploy_resource] }}"
+    state: "{{ deploy_state }}"
+  when:
+    - resources is not defined

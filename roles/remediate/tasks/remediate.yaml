@@ -1,0 +1,27 @@
+---
+- name: Resolve inventory
+  ansible.builtin.include_tasks: manage_inventory.yaml
+
+- name: Retrieve host vars and save locally
+  ansible.builtin.include_tasks: retrieve.yaml
+  when: data_store['scm'] is defined
+
+- name: Get list of SOT files
+  ansible.builtin.find:
+    paths: "{{ remediate_inventory_path }}/host_vars/{{ inventory_hostname }}"
+    recurse: false
+    patterns: "*.yaml"
+    file_type: file
+  register: remediate_found_directories
+
+- name: Set state as overridden to restore config
+  ansible.builtin.set_fact:
+    remediate_state: overridden
+  when: remediate_state is not defined
+
+- name: Rectify drift
+  ansible.builtin.include_tasks: apply_configuration.yaml
+  loop: "{{ remediate_found_directories.files }}"
+  loop_control:
+    loop_var: file
+    label: "{{ file.path | basename }}"

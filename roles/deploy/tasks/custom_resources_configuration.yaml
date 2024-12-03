@@ -1,0 +1,10 @@
+---
+- name: Apply provided configuration when resources are provided
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+    name: "{{ ansible_network_os.split('.')[-1] }}_{{ deploy_lst }}"
+    config: "{{ module_vars[deploy_resource] }}"
+    state: "{{ deploy_state }}"
+  when:
+    - deploy_lst in resources
+    - module_vars[deploy_resource]
