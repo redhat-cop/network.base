@@ -1,24 +1,40 @@
 ---
 - name: Debug
   ansible.builtin.debug:
-    msg: "START network.base gather opeartion integration tests on connection={{ ansible_connection }}"
+    msg: "START network.base gather role integration tests on connection={{ ansible_connection }}"
 
-- name: Gather and assertion
+- name: Test gather role functionality
   block:
-    - name: Run network.base validated content with gather operation
-      ansible.builtin.include_role:
-        name: network.base.resource_manager
-      vars:
-        operation: gather
-        resources:
-          - interfaces
-      register: resouce_manager_result
+    - name: Set network OS
+      ansible.builtin.set_fact:
+        test_ansible_network_os: "cisco.ios.ios"
 
-    - name: Assert that gather result
+    - name: Set resources to gather
+      ansible.builtin.set_fact:
+        test_resources:
+          - 'interfaces'
+
+    - name: Run gather role to retrieve structured facts
+      ansible.builtin.include_role:
+        name: network.base.gather
+      vars:
+        ansible_network_os: "{{ test_ansible_network_os }}"
+        resources: "{{ test_resources }}"
+      register: gather_result
+    
+    - name: Assert gather result
       ansible.builtin.assert:
         that:
-          - resouce_manager_result.changed == false
+          - gather_result is defined
+          - gather_result.changed == false
+          - gather_result.gathered is defined
+          - gather_result.gathered | length > 0
+        fail_msg: "Gather role did not return expected facts for {{ test_ansible_network_os }} and resources {{ test_resources }}"
+
+    - name: Debug gathered facts
+      ansible.builtin.debug:
+        var: gather_result.gathered_facts
 
 - name: Debug
   ansible.builtin.debug:
-    msg: "END network.base gahter opeartion integration tests on connection={{ ansible_connection }}"
+    msg: "END network.base gather role integration tests on connection={{ ansible_connection }}"

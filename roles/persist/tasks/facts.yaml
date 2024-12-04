@@ -1,0 +1,19 @@
+---
+- name: Run the platform facts module
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+    name: "{{ ansible_network_os }}_{{ res }}"
+    state: gathered
+  register: persist_result
+
+- name: Include file write task
+  ansible.builtin.include_tasks: write_to_file.yaml
+  when:
+    - ignore_empty is undefined
+    - persist_result["gathered"] != {}
+    - persist_result["gathered"] != []
+
+- name: Include file write task
+  ansible.builtin.include_tasks: write_to_file.yaml
+  when:
+    - ignore_empty is defined

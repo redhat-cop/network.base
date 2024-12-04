@@ -1,0 +1,11 @@
+---
+- name: Run the platform facts module
+  ansible.netcommon.network_resource:
+    os_name: "{{ ansible_network_os }}"
+    name: "{{ ansible_network_os }}_{{ res }}"
+    state: gathered
+  register: gather_result
+
+- name: Display resource facts
+  ansible.builtin.debug:
+    msg: "{{ gather_result }}"

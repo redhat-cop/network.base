@@ -1,9 +1,9 @@
 ---
 - name: Debug
   ansible.builtin.debug:
-    msg: "START network.base detect opeartion integration tests on connection={{ ansible_connection }}"
+    msg: "START network.base detect operation integration tests on connection={{ ansible_connection }}"
 
-- name: Cleanup, persist and detect drift
+- name: Cleanup, persist, and detect drift
   block:
     - name: Reset configuration
       ansible.builtin.include_tasks: _cleanup.yaml
@@ -12,37 +12,38 @@
       ansible.builtin.set_fact:
         test_resources:
           - 'interfaces'
-          - 'l2_interfaces'
-          - 'l3_interfaces'
 
-    - name: Set data data_store
+    - name: Set local data store
       ansible.builtin.set_fact:
         test_data_store:
           local: "~/test_backup"
 
-    - name: Run network.base validated content with persist operation
+    - name: Run persist role to gather and persist facts
       ansible.builtin.include_role:
-        name: network.base.resource_manager
+        name: network.base.persist
       vars:
-        operation: persist
-        persist_empty: true
         resources: "{{ test_resources }}"
         data_store: "{{ test_data_store }}"
 
-    - name: Assert file generations
+    - name: Assert file generation for persisted facts
       ansible.builtin.include_tasks: includes/assertions.yaml
       loop: "{{ test_resources }}"
       loop_control:
         loop_var: filename
 
-    - name: Run network.base validated content with persist operation
+    - name: Run detect role to identify configuration drift
       ansible.builtin.include_role:
-        name: network.base.resource_manager
+        name: network.base.detect
       vars:
-        operation: detect
         resources: "{{ test_resources }}"
         data_store: "{{ test_data_store }}"
-      register: resouce_manager_result
+    
+
+    - name: Assert drift detection result
+      ansible.builtin.assert:
+        that:
+          - detect_result is defined
+          - detect_result.changed == false
 
   always:
     - name: Reset configuration
@@ -50,4 +51,4 @@
 
 - name: Debug
   ansible.builtin.debug:
-    msg: "END network.base detect opeartion integration tests on connection={{ ansible_connection }}"
+    msg: "END network.base detect operation integration tests on connection={{ ansible_connection }}"

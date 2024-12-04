@@ -1,0 +1,25 @@
+---
+- name: Set facts
+  ansible.builtin.set_fact:
+    detect_resource: "{{ (rms.path | basename).split('.') | first }}"
+
+- name: "Start detecting config drift"
+  when: detect_resource in resources
+  block:
+    - name: Grab the resource facts
+      ansible.builtin.include_vars:
+        file: "{{ rms.path }}"
+        name: module_vars
+
+    - name: Check for config drift
+      ansible.netcommon.network_resource:
+        os_name: "{{ ansible_network_os }}"
+        name: "{{ ansible_network_os.split('.')[-1] }}_{{ detect_resource }}"
+        config: "{{ module_vars[detect_resource] }}"
+        state: "{{ detect_state }}"
+      check_mode: true
+      register: detect_result
+
+    - name: Detect if there is config drift.
+      ansible.builtin.include_tasks: display_drift.yaml
+      when: (detect_result.changed)
