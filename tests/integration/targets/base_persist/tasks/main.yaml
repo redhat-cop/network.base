@@ -16,7 +16,7 @@
     - name: Set resources
       ansible.builtin.set_fact:
         test_resources:
-          - 'interfaces'
+          - "interfaces"
 
     - name: Run persist role to gather and persist facts
       ansible.builtin.include_role:

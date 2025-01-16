@@ -12,7 +12,7 @@
 
 - name: Set default state
   ansible.builtin.set_fact:
-    deploy_state: 'merged'
+    deploy_state: "merged"
   when: deploy_state is not defined
 
 - name: Include tasks

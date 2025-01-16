@@ -70,4 +70,3 @@ See [LICENSE](https://www.gnu.org/licenses/gpl-3.0.txt) to see the full text.
 ## Author Information
 
 - Ansible Network Content Team
-

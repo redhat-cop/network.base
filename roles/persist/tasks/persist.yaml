@@ -29,12 +29,11 @@
 - name: Include publish with tag tasks
   ansible.builtin.include_tasks: publish_tag.yaml
   when:
-    - data_store.scm.origin is defined 
+    - data_store.scm.origin is defined
     - data_store.scm.origin.tag is defined
 
 - name: Include publish without tag tasks
   ansible.builtin.include_tasks: publish.yaml
   when:
-    - data_store.scm.origin is defined 
+    - data_store.scm.origin is defined
     - data_store.scm.origin.tag is not defined
-

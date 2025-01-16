@@ -12,7 +12,7 @@
 
 - name: Set default state
   ansible.builtin.set_fact:
-    remediate_state: 'merged'
+    remediate_state: "merged"
   when: remediate_state is not defined
 
 - name: Include tasks

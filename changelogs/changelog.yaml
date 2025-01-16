@@ -2,126 +2,130 @@ ancestor: null
 releases:
   1.0.0:
     changes:
-      release_summary: Releasing v1.0.0 of the Ansible network.base collection that
+      release_summary:
+        Releasing v1.0.0 of the Ansible network.base collection that
         enables ansible network validated content to gather, persist, deploy facts.
     fragments:
-    - add_resource_manager_role.yaml
-    - release_1.0.0.yaml
-    - update_sanity_jobs.yaml
-    release_date: '2022-11-02'
+      - add_resource_manager_role.yaml
+      - release_1.0.0.yaml
+      - update_sanity_jobs.yaml
+    release_date: "2022-11-02"
   1.1.0:
     changes:
       minor_changes:
-      - fix linting issues and remove integrated health checks.
+        - fix linting issues and remove integrated health checks.
     fragments:
-    - ansible_lint_run_fixes.yaml
-    release_date: '2022-11-03'
+      - ansible_lint_run_fixes.yaml
+    release_date: "2022-11-03"
   1.2.0:
     changes:
-      release_summary: Re-releasing v1.1.0 with updated version tag and fixed URLs
+      release_summary:
+        Re-releasing v1.1.0 with updated version tag and fixed URLs
         for issues and repository in galaxy.yml.
     fragments:
-    - prep_1.2.0.yaml
-    release_date: '2022-11-09'
+      - prep_1.2.0.yaml
+    release_date: "2022-11-09"
   1.2.1:
     changes:
       bugfixes:
-      - fix runtime dynamic network os resource module invokation.
+        - fix runtime dynamic network os resource module invokation.
     fragments:
-    - fix_platform_dynamic_invoke.yaml
-    release_date: '2022-12-02'
+      - fix_platform_dynamic_invoke.yaml
+    release_date: "2022-12-02"
   2.0.0:
     changes:
       bugfixes:
-      - Fix issue in Detect action.
-      - Fix state of detect and remediate operation when overridden is not supported
-        by any RMs.
+        - Fix issue in Detect action.
+        - Fix state of detect and remediate operation when overridden is not supported
+          by any RMs.
       doc_changes:
-      - Fix docs issues in README.
-      - Update collection installation section.
-      - Update instllation dcumentations and workflow.
+        - Fix docs issues in README.
+        - Update collection installation section.
+        - Update instllation dcumentations and workflow.
       major_changes:
-      - Create inventory based on hostname
+        - Create inventory based on hostname
       minor_changes:
-      - Add feature which support detect and remediate actions.
-      - provide collection prefix with resource name.
+        - Add feature which support detect and remediate actions.
+        - provide collection prefix with resource name.
     fragments:
-    - feature_detect_restore.yaml
-    - fix_detect.yaml
-    - fix_detect_state.yaml
-    - fix_detect_when_redirect.yaml
-    - fix_docs.yaml
-    - host_based_vars.yaml
-    - update_base_docs.yaml
-    - update_readme.yaml
-    release_date: '2023-02-23'
+      - feature_detect_restore.yaml
+      - fix_detect.yaml
+      - fix_detect_state.yaml
+      - fix_detect_when_redirect.yaml
+      - fix_docs.yaml
+      - host_based_vars.yaml
+      - update_base_docs.yaml
+      - update_readme.yaml
+    release_date: "2023-02-23"
   2.1.0:
-    release_date: '2023-04-18'
+    release_date: "2023-04-18"
   3.0.0:
     changes:
       bugfixes:
-      - provide correct loop var name when running gather task.
+        - provide correct loop var name when running gather task.
       doc_changes:
-      - Update README.md with data_store structure changes and scm enablement.
+        - Update README.md with data_store structure changes and scm enablement.
     fragments:
-    - fix_gather_loop.yaml
-    - update_conditions.yaml
-    - update_readme.yaml
-    release_date: '2023-05-11'
+      - fix_gather_loop.yaml
+      - update_conditions.yaml
+      - update_readme.yaml
+    release_date: "2023-05-11"
   4.0.0:
     changes:
       bugfixes:
-      - confirm drift based on changed status rather than commands.
+        - confirm drift based on changed status rather than commands.
       doc_changes:
-      - Fix misspelled words in README, and fix examples.
-      - Update tests for gather, persist, remediate and deploy.
+        - Fix misspelled words in README, and fix examples.
+        - Update tests for gather, persist, remediate and deploy.
       major_changes:
-      - Rename role variables to follow the role_name_var variable naming rule for
-        roles.
-      - Rename variable action as operation, on behalf of ansible-lint var-naming
-        error for reserved Ansible keywords.
+        - Rename role variables to follow the role_name_var variable naming rule for
+          roles.
+        - Rename variable action as operation, on behalf of ansible-lint var-naming
+          error for reserved Ansible keywords.
       minor_changes:
-      - Add support for parent_directory options.
+        - Add support for parent_directory options.
     fragments:
-    - make_action_operation.yml
-    - support_parent_directory.yaml
-    - update_tests.yaml
-    release_date: '2023-07-26'
+      - make_action_operation.yml
+      - support_parent_directory.yaml
+      - update_tests.yaml
+    release_date: "2023-07-26"
   4.1.0:
     changes:
       doc_changes:
-      - Update badges to refer to the proper GitHub repository.
+        - Update badges to refer to the proper GitHub repository.
       minor_changes:
-      - Add tag support to persist task.
+        - Add tag support to persist task.
     fragments:
-    - implement_tag.yaml
-    - update_badge.yaml
-    release_date: '2023-11-29'
+      - implement_tag.yaml
+      - update_badge.yaml
+    release_date: "2023-11-29"
   5.0.0:
     changes:
       major_changes:
-      - Bumping `requires_ansible` to `>=2.14.0`, since previous ansible-core versions
-        are EoL now.
-      release_summary: Starting from this release, the minimum `ansible-core` version
+        - Bumping `requires_ansible` to `>=2.14.0`, since previous ansible-core versions
+          are EoL now.
+      release_summary:
+        Starting from this release, the minimum `ansible-core` version
         this collection requires is `2.14.0`. The last known version compatible with
         ansible-core<2.14 is `v4.1.0`.
     fragments:
-    - trivial_lint.yaml
-    release_date: '2023-12-01'
+      - trivial_lint.yaml
+    release_date: "2023-12-01"
   6.0.0:
     changes:
       doc_changes:
-      - Eliminate the redundant installation section.
-      - Update README.
-      - Update the installation steps with correct url.
+        - Eliminate the redundant installation section.
+        - Update README.
+        - Update the installation steps with correct url.
       major_changes:
-      - Bumping `requires_ansible` to `>=2.15.0`, since previous ansible-core versions
-        are EoL now.
-      release_summary: 'With this release, the minimum required version of `ansible-core`
+        - Bumping `requires_ansible` to `>=2.15.0`, since previous ansible-core versions
+          are EoL now.
+      release_summary:
+        "With this release, the minimum required version of `ansible-core`
         for this collection is `2.15.0`. The last version known to be compatible with
-        `ansible-core` versions below `2.15` is v5.0.0.'
+        `ansible-core` versions below `2.15` is v5.0.0."
     fragments:
-    - bump_215.yaml
-    - remove_redundant.yaml
-    - update_readme.yaml
-    release_date: '2024-06-12'
+      - bump_215.yaml
+      - remove_redundant.yaml
+      - update_readme.yaml
+    release_date: "2024-06-12"
