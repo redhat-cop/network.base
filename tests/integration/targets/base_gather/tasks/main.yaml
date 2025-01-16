@@ -12,7 +12,7 @@
     - name: Set resources to gather
       ansible.builtin.set_fact:
         test_resources:
-          - 'interfaces'
+          - "interfaces"
 
     - name: Run gather role to retrieve structured facts
       ansible.builtin.include_role:
@@ -21,7 +21,7 @@
         ansible_network_os: "{{ test_ansible_network_os }}"
         resources: "{{ test_resources }}"
       register: gather_result
-    
+
     - name: Assert gather result
       ansible.builtin.assert:
         that:
