@@ -121,11 +121,20 @@ releases:
         - Bumping `requires_ansible` to `>=2.15.0`, since previous ansible-core versions
           are EoL now.
       release_summary:
-        "With this release, the minimum required version of `ansible-core`
+        With this release, the minimum required version of `ansible-core`
         for this collection is `2.15.0`. The last version known to be compatible with
-        `ansible-core` versions below `2.15` is v5.0.0."
+        `ansible-core` versions below `2.15` is v5.0.0.
     fragments:
       - bump_215.yaml
       - remove_redundant.yaml
       - update_readme.yaml
     release_date: "2024-06-12"
+  7.0.0:
+    changes:
+      major_changes:
+        - Restructured the network.base collection by converting supported operations
+          into separate roles.
+    fragments:
+      - fix_ci.yaml
+      - restructure_operations_into_roles.yaml
+    release_date: "2025-01-17"

@@ -1,3 +1,0 @@
----
-major_changes:
-  - "Restructured the network.base collection by converting supported operations into separate roles."
