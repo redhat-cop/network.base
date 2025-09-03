@@ -2,7 +2,7 @@
 authors:
   - Rohit Thakur (@rohitthakur2590)
 dependencies:
-  "ansible.netcommon": ">=6.0.0"
+  "ansible.netcommon": ">=8.1.0"
   "ansible.utils": ">=3.0.0"
   "ansible.scm": ">=2.0.0"
 license_file: LICENSE
@@ -13,4 +13,4 @@ readme: README.md
 repository: https://github.com/redhat-cop/network.base
 issues: https://github.com/redhat-cop/network.base/issues
 tags: [networking]
-version: 7.0.0
+version: 8.0.0
